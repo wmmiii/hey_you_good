@@ -1,8 +1,13 @@
 <script lang="ts">
   export let onClick: () => void = () => {};
+  export let disabled = false;
 </script>
 
-<button class="button" on:click={onClick}>
+<button
+  class="button"
+  class:disabled
+  on:click={() => (disabled ? null : onClick())}
+>
   <slot />
 </button>
 
@@ -24,5 +29,11 @@
 
   .button:active {
     background: var(--button-bg-active);
+  }
+
+  .disabled {
+    /* !important because I'm lazy. */
+    background: var(--button-bg-disabled) !important;
+    cursor: default;
   }
 </style>

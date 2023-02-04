@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { gloriaFeelings, gloriaWheel } from "../feelingsModel";
+  import { gloriaFeelings } from "../feelingsModel";
   import Button from "../components/Button.svelte";
   import Page from "../components/Page.svelte";
   import { transitionTo } from "../navigation";
+  import { recordFeeling } from "../storage/localDb";
 
   $: feeling = [];
 
@@ -41,6 +42,12 @@
       feeling = [...feelingPath];
     }
   }
+
+  function saveFeeling(): void {
+    recordFeeling(new Date(), feeling).then(() =>
+      transitionTo("index", "slide-left")
+    );
+  }
 </script>
 
 <Page globalClass="check-in-content">
@@ -62,15 +69,19 @@
   {/each}
 
   <div slot="footer" class="footer">
-    <Button onClick={() => transitionTo("index", "slide-right")}>Back to home</Button>
-    <Button onClick={() => transitionTo("index", "slide-left")}>Save</Button>
+    <Button onClick={() => transitionTo("index", "slide-right")}
+      >Back to home</Button
+    >
+    <Button
+      onClick={saveFeeling}
+      disabled={feeling.length < 1}
+    >
+      Save
+    </Button>
   </div>
 </Page>
 
 <style>
-  :global(.check-in-content) {
-  }
-
   .footer {
     display: flex;
     flex-direction: row;

@@ -12,6 +12,7 @@ body {
   --button-bg-active: #1f3a69;
   --button-bg-hover: #4066a8;
   --button-bg: #284a85;
+  --button-bg-disabled: #5f5f5f;
   --button-color: #ffffff;
   --font-size-large: 24px;
   --font-size-med: 18px;
