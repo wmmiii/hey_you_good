@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "types": [
+      "svelte"
+    ]
+  }
+}

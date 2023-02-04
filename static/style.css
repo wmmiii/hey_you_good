@@ -1,0 +1,24 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  --bg: linear-gradient(#fffdd6, #ffe28a);
+  --button-bg: #284a85;
+  --button-bg-hover: #4066a8;
+  --button-bg-active: #1f3a69;
+  --button-color: #ffffff;
+  --border-radius: 4px;
+  --padding-med: 16px;
+  --font-size-large: 24px;
+
+  background-image: var(--bg);
+}
+
+* {
+  font-family: "Raleway", sans-serif;
+}
