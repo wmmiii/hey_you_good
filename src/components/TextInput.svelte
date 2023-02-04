@@ -8,6 +8,7 @@
   class="input {globalClass}"
   type="text"
   on:input={(event) => (value = event.target.value)}
+  {value}
   {placeholder}
 />
 
