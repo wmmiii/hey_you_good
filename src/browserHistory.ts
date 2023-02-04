@@ -1,4 +1,4 @@
-import { currentPage, PageId } from "./navigation";
+import { currentPage, PageId, transitionTo } from "./navigation";
 
 interface PageState {
   page: PageId;
@@ -24,9 +24,6 @@ window.onpopstate = (event) => {
   ignoreStateUpdate = true;
 
   const state: PageState = event.state;
-  if (state && state['page']) {
-    currentPage.set(state['page']);
-  } else {
-    currentPage.set('index');
-  }
+  const page = state && state.page ? state.page : 'index';
+  transitionTo(page, 'fade');
 };
