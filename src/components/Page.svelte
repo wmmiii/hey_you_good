@@ -6,7 +6,7 @@
    * as a class directive. Class directives may only be applied to DOM elements
    * and may not be applied to custom components. :(
    */
-  export let globalClass: string | undefined | null;
+  export let globalClass: string | undefined | null = undefined;
 </script>
 
 <div

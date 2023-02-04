@@ -4,13 +4,23 @@
   import Page from "../components/Page.svelte";
   import { transitionTo } from "../navigation";
   import { recordFeeling } from "../storage/localDb";
+  import TextInput from "../components/TextInput.svelte";
 
   $: feeling = [];
+  $: searchString = "";
 
   function isFeelingVisible(
     feelingPath: string[],
-    existingPath: string[]
+    existingPath: string[],
+    searchString: string
   ): boolean {
+    if (searchString) {
+      const lowerSearch = searchString.toLocaleLowerCase();
+      const lowerFeeling =
+        feelingPath[feelingPath.length - 1].toLocaleLowerCase();
+      return lowerFeeling.indexOf(lowerSearch) >= 0;
+    }
+
     if (feelingPath.length - 1 > existingPath.length) {
       return false;
     } else if (feelingPath.length > existingPath.length) {
@@ -41,6 +51,7 @@
     } else {
       feeling = [...feelingPath];
     }
+    searchString = "";
   }
 
   function saveFeeling(): void {
@@ -50,12 +61,18 @@
   }
 </script>
 
-<Page globalClass="check-in-content">
+<Page>
   <h1 slot="header">How are you feeling?</h1>
+
+  <TextInput
+    globalClass="feeling-search-input"
+    bind:value={searchString}
+    placeholder="Search for a feeling..."
+  />
 
   {#each Object.keys(gloriaFeelings) as feelingName (feelingName)}
     {@const f = gloriaFeelings[feelingName]}
-    {#if isFeelingVisible(f.path, feeling)}
+    {#if isFeelingVisible(f.path, feeling, searchString)}
       <div
         class="feeling"
         class:selected={isFeelingSelected(f.path, feeling)}
@@ -72,12 +89,7 @@
     <Button onClick={() => transitionTo("index", "slide-right")}
       >Back to home</Button
     >
-    <Button
-      onClick={saveFeeling}
-      disabled={feeling.length < 1}
-    >
-      Save
-    </Button>
+    <Button onClick={saveFeeling} disabled={feeling.length < 1}>Save</Button>
   </div>
 </Page>
 
@@ -93,12 +105,18 @@
     color: #ffffff;
     cursor: pointer;
     font-size: var(--font-size-med);
-    margin: var(--padding-small);
+    margin: var(--padding-small) 0;
     padding: var(--padding-med);
   }
 
   .selected,
   .feeling:hover {
     filter: brightness(1.2);
+  }
+
+  :global(.feeling-search-input) {
+    display: block;
+    margin: var(--padding-small) 0;
+    width: 100%;
   }
 </style>

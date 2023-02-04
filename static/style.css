@@ -10,12 +10,15 @@ body {
   --bg: linear-gradient(#fffdd6, #ffe28a);
   --border-radius: 4px;
   --button-bg-active: #1f3a69;
+  --button-bg-disabled: #5f5f5f;
   --button-bg-hover: #4066a8;
   --button-bg: #284a85;
-  --button-bg-disabled: #5f5f5f;
   --button-color: #ffffff;
   --font-size-large: 24px;
   --font-size-med: 18px;
+  --input-bg: #ffffff;
+  --input-border-focus: 2px solid #a7a7a7;
+  --input-border: 2px solid transparent;
   --padding-med: 16px;
   --padding-small: 12px;
 
