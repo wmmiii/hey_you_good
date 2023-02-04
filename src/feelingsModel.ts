@@ -70,7 +70,7 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
   'Disgusted': {
     color: '#ab7bb5',
     subFeelings: {
-      'Disapproving': ['Judgemental', 'Embarrassed'],
+      'Disapproving': ['Judgemental'],
       'Disappointed': ['Appalled', 'Revolted'],
       'Awful': ['Nauseated', 'Detestable'],
       'Repelled': ['Horrified', 'Hesitant'],
