@@ -8,13 +8,15 @@ body {
 
 body {
   --bg: linear-gradient(#fffdd6, #ffe28a);
-  --button-bg: #284a85;
-  --button-bg-hover: #4066a8;
-  --button-bg-active: #1f3a69;
-  --button-color: #ffffff;
   --border-radius: 4px;
-  --padding-med: 16px;
+  --button-bg-active: #1f3a69;
+  --button-bg-hover: #4066a8;
+  --button-bg: #284a85;
+  --button-color: #ffffff;
   --font-size-large: 24px;
+  --font-size-med: 18px;
+  --padding-med: 16px;
+  --padding-small: 12px;
 
   background-image: var(--bg);
 }

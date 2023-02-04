@@ -15,6 +15,7 @@
     cursor: pointer;
     font-size: var(--font-size-large);
     padding: var(--padding-med);
+    min-width: 256px;
   }
 
   .button:hover {

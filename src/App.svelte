@@ -24,5 +24,6 @@
 		margin: auto;
 		max-width: 800px;
 		position: relative;
+		overflow: hidden;
 	}
 </style>

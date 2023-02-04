@@ -13,12 +13,8 @@
 
 <style>
   :global(.index-content) {
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 100%;
     justify-content: space-around;
-    padding: var(--padding-med);
-    width: 100%;
   }
 </style>
