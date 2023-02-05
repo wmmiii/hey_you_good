@@ -1,0 +1,55 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Download pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.13.4
+
+      - name: Install node_modules
+        run: pnpm install
+
+      - name: Build
+        run: bazel build //:static_tar
+
+      - name: Extract tar
+        run: |
+          mkdir dist
+          tar -xvf bazel-bin/static_tar.tar -C dist
+
+      - name: Upload pages
+        uses: actions/upload-pages-artifact@master
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
