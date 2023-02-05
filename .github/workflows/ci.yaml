@@ -1,0 +1,23 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Download pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.13.4
+
+      - name: Install node_modules
+        run: pnpm install
+
+      - name: Build
+        run: bazel build //...
