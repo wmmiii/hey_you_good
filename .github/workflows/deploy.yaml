@@ -23,12 +23,12 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: bazel build //:static_tar
+        run: bazel build //util:package
 
       - name: Extract tar
         run: |
           mkdir dist
-          tar -xvf bazel-bin/static_tar.tar -C dist
+          tar -xvf bazel-bin/util/package.tar -C dist
 
       - name: Upload pages
         uses: actions/upload-pages-artifact@master

@@ -16,8 +16,8 @@ import (
 )
 
 var (
-	//go:embed static.tar
-	static_tar []byte
+	//go:embed package.tar
+	package_tar []byte
 
 	reloadScript = os.Getenv("IBAZEL_LIVERELOAD_URL")
 )
@@ -42,7 +42,7 @@ func main() {
 	log.Printf("Created temp dir %s", temp)
 
 	// Read embedded tar file into temporary directory
-	tarReader := tar.NewReader(bytes.NewReader(static_tar))
+	tarReader := tar.NewReader(bytes.NewReader(package_tar))
 
 	for {
 		cur, err := tarReader.Next()
