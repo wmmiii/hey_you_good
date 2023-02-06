@@ -11,5 +11,6 @@ esbuild(
         ],
     config = "esbuild.config.mjs",
     entry_point = "main.ts",
+    minify = True,
     visibility = ["//:__pkg__"],
 )
