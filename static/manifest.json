@@ -2,6 +2,9 @@
   "background_color": "#ffffff",
   "description": "A tiny app to help track mental health over time.",
   "dir": "ltr",
+  "display_override": [
+    "fullscreen"
+  ],
   "display": "standalone",
   "name": "Hey, you good?",
   "orientation": "any",
