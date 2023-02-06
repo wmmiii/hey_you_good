@@ -5,6 +5,7 @@ pkg_filegroup(
     srcs = [
         ":root",
         "//static/fonts",
+        "//static/icons",
     ],
     visibility = ["//:__pkg__"],
 )
