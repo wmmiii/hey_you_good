@@ -16,3 +16,11 @@ esbuild(
     minify = True,
     visibility = ["//:__pkg__"],
 )
+
+esbuild(
+    name = "service_worker",
+    srcs =
+        glob(["**/*.ts"]),
+    entry_point = "serviceWorker.ts",
+    visibility = ["//:__pkg__"],
+)
