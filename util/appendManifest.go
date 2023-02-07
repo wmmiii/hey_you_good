@@ -3,9 +3,11 @@ package main
 import (
 	"archive/tar"
 	"bytes"
+	"crypto/md5"
 	_ "embed"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -32,6 +34,11 @@ func main() {
 	}
 	tarReader := tar.NewReader(bytes.NewReader(tarBytes))
 
+	h := md5.New()
+	h.Write(tarBytes)
+	checksum := h.Sum(nil)
+	checksumString := fmt.Sprintf("%x", checksum)
+
 	out, err := os.Create(outFile)
 	if err != nil {
 		log.Fatal(err)
@@ -54,13 +61,15 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+			data = bytes.ReplaceAll(data, []byte("%BUILD_CHECKSUM%"), []byte(checksumString))
 			tarWriter.Write(data)
 		}
 	}
 
 	// Create manifest file
 	manifest := manifest{
-		Files: files,
+		Files:    files,
+		Checksum: checksumString,
 	}
 
 	manifestString, err := json.Marshal(manifest)
@@ -82,5 +91,6 @@ func main() {
 }
 
 type manifest struct {
-	Files []string
+	Files    []string
+	Checksum string
 }
