@@ -9,6 +9,9 @@
     Check-In
   </Button>
   <Button>Daily Log</Button>
+  <div class="footer" slot="footer">
+    Build version %BUILD_CHECKSUM%
+  </div>
 </Page>
 
 <style>
@@ -16,5 +19,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+  }
+
+  .footer {
+    font-weight: 300;
+    font-size: 12px;
   }
 </style>
