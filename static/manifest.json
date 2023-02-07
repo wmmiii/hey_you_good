@@ -7,7 +7,7 @@
   ],
   "display": "standalone",
   "name": "Hey, you good?",
-  "orientation": "any",
+  "orientation": "portrait",
   "scope": "/",
   "short_name": "Hey, you good?",
   "start_url": "/",
