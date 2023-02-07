@@ -9,6 +9,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
@@ -72,8 +73,11 @@ func main() {
 
 	// Append manifest file
 	tarWriter.WriteHeader(&tar.Header{
-		Name: "file_manifest.json",
-		Size: int64(len(manifestBytes)),
+		Name:       "file_manifest.json",
+		Size:       int64(len(manifestBytes)),
+		ModTime:    time.Unix(0, 0),
+		AccessTime: time.Unix(0, 0),
+		ChangeTime: time.Unix(0, 0),
 	})
 	tarWriter.Write(manifestString)
 
