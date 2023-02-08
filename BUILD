@@ -14,6 +14,7 @@ pkg_tar(
     name = "static_tar",
     srcs = [
         "//src:bundle",
+        "//src:service_worker",
         "//static",
     ],
     visibility = ["//util:__pkg__"],

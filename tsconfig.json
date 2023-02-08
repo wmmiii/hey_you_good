@@ -5,7 +5,7 @@
     "declarationMap": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "WebWorker"],
     "types": [
       "svelte"
     ]
