@@ -64,7 +64,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		if err := os.WriteFile(filePath, data, 0666); err != nil {
+		if err := os.WriteFile(filePath, data, 0o0666); err != nil {
 			log.Fatal(err)
 		}
 	}
