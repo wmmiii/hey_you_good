@@ -5,13 +5,18 @@ declare const clients: any;
 
 const cacheName = 'web-cache';
 
+const shouldCache = (fileName: string): boolean => {
+  return fileName.indexOf('service_worker.js') < 0
+    && fileName.indexOf('manifest.json') < 0;
+};
+
 self.addEventListener('install', (event: any) => {
   event.waitUntil((async () => {
     const cache = await caches.open(cacheName);
     const response = await fetch('/file_manifest.json');
     const jsonBody = await response.json();
     const files = jsonBody['Files'] as string[];
-    cache.addAll(files.filter((f) => f.indexOf('service_worker.js') < 0));
+    cache.addAll(files.filter(shouldCache));
     cache.add('/');
   })());
 });
