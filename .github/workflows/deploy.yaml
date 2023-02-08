@@ -17,8 +17,12 @@ jobs:
       - name: Build
         run: bazel build //util:package
 
-      - name: Output build checksum
-        run: echo -n "build_checksum=" | cat - bazel-bin/util/checksum.txt >> $GITHUB_OUTPUT
+      - id: build-checksum
+        name: Output build checksum
+        run: |
+          CHECKSUM="$(cat bazel-bin/util/checksum.txt)"
+          echo "build_checksum=$CHECKSUM" >> $GITHUB_OUTPUT
+          echo "Build checksum: $CHECKSUM" >> $GITHUB_STEP_SUMMARY
 
       - name: Extract tar
         run: |
