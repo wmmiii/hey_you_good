@@ -21,10 +21,12 @@ const checksumReplace = "%BUILD_CHECKSUM%"
 func main() {
 	var tarFile string
 	var outFile string
+	var checksumFile string
 
 	// Read input flags
 	flag.StringVar(&tarFile, "tar", "", "The `.tar` file to append a manifest to.")
-	flag.StringVar(&outFile, "out", "manifest.json", "The output tar with the appended manifest.")
+	flag.StringVar(&outFile, "out", "package.tar", "The output tar with the appended manifest.")
+	flag.StringVar(&checksumFile, "checksumFile", "checksum.txt", "The output file that will contain the checksum of the package.")
 
 	flag.Parse()
 
@@ -44,19 +46,13 @@ func main() {
 	checksum := h.Sum(nil)
 	checksumString := fmt.Sprintf("%x", checksum)
 
-	// Write out to GitHub actions if applicable
-	if gitHubOutput != "" {
-		f, err := os.OpenFile(gitHubOutput, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		defer f.Close()
-
-		if _, err = f.WriteString("build_checksum=" + checksumString); err != nil {
-			log.Fatal(err)
-		}
+	// Write out the checksum file
+	checkOut, err := os.Create(checksumFile)
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer checkOut.Close()
+	checkOut.WriteString(checksumString)
 
 	// Proxy calls to
 	out, err := os.Create(outFile)
@@ -104,6 +100,7 @@ func main() {
 	tarWriter.WriteHeader(&tar.Header{
 		Name:       "file_manifest.json",
 		Size:       int64(len(manifestBytes)),
+		Mode:       0x0444,
 		ModTime:    time.Unix(0, 0),
 		AccessTime: time.Unix(0, 0),
 		ChangeTime: time.Unix(0, 0),

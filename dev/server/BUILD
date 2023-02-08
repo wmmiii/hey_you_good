@@ -9,7 +9,7 @@ go_binary(
 
 genrule(
     name = "package",
-    srcs = ["//util:package"],
+    srcs = ["//util:package.tar"],
     outs = ["package.tar"],
-    cmd = "cp $(location //util:package) $@",
+    cmd = "cp $(location //util:package.tar) $@",
 )
