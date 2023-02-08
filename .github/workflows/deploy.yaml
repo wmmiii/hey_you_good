@@ -25,6 +25,9 @@ jobs:
       - name: Build
         run: bazel build //util:package
 
+      - name: Output build checksum
+        run: cat bazel-bin/util/checksum.txt > $GITHUB_OUTPUT
+
       - name: Extract tar
         run: |
           mkdir dist
