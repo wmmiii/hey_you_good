@@ -14,6 +14,10 @@ import (
 	"time"
 )
 
+var gitHubOutput = os.Getenv("GITHUB_OUTPUT")
+
+const checksumReplace = "%BUILD_CHECKSUM%"
+
 func main() {
 	var tarFile string
 	var outFile string
@@ -40,11 +44,27 @@ func main() {
 	checksum := h.Sum(nil)
 	checksumString := fmt.Sprintf("%x", checksum)
 
+	// Write out to GitHub actions if applicable
+	if gitHubOutput != "" {
+		f, err := os.OpenFile(gitHubOutput, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer f.Close()
+
+		if _, err = f.WriteString("build_checksum=" + checksumString); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Proxy calls to
 	out, err := os.Create(outFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 	tarWriter := tar.NewWriter(out)
+	defer tarWriter.Close()
 
 	files := []string{}
 
@@ -62,7 +82,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			data = bytes.ReplaceAll(data, []byte("%BUILD_CHECKSUM%"), []byte(checksumString))
+			data = bytes.ReplaceAll(data, []byte(checksumReplace), []byte(checksumString))
 			tarWriter.Write(data)
 		}
 	}
@@ -89,9 +109,6 @@ func main() {
 		ChangeTime: time.Unix(0, 0),
 	})
 	tarWriter.Write(manifestString)
-
-	// Close tar
-	tarWriter.Close()
 }
 
 type manifest struct {
