@@ -3,9 +3,9 @@
   "description": "A tiny app to help track mental health over time.",
   "dir": "ltr",
   "display_override": [
-    "fullscreen"
+    "standalone"
   ],
-  "display": "standalone",
+  "display": "fullscreen",
   "name": "Hey, you good?",
   "orientation": "portrait",
   "scope": "/",
