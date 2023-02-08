@@ -38,7 +38,7 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
     color: '#35ba9f',
     subFeelings: {
       'Tired': ['Sleepy', 'Unfocused'],
-      'Stressed': ['Out of Control', 'Overwhelmed'],
+      'Stressed': ['Out of Control', 'Overloaded'],
       'Busy': ['Rushed', 'Pressured'],
       'Bored': ['Apathetic', 'Indifferent'],
     },
@@ -89,47 +89,73 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
   },
 };
 
-interface FeelingsList {
-  [feeling: string]: { color: string, path: string[] },
+interface FeelingsIndex {
+  [feeling: string]: {color: string, path: string[] },
 }
 
-function createList(model: { [feeling: string]: FeelingCategory }): FeelingsList {
-  const list: FeelingsList = {};
+function createIndex(model: { [feeling: string]: FeelingCategory }): FeelingsIndex {
+  const index: FeelingsIndex = {};
+
+  let id = {
+    id: 0
+  };
 
   for (let feelingName in gloriaWheel) {
     const feeling = model[feelingName];
     const path = [feelingName];
-    list[feelingName] = {
+    index[feelingName] = {
       color: feeling.color,
       path: path,
     };
 
     for (let subFeeling in feeling.subFeelings) {
-      addSlice(list, path, feeling.color, subFeeling, feeling.subFeelings[subFeeling])
+      addSlice(index, path, feeling.color, subFeeling, feeling.subFeelings[subFeeling])
     }
   }
 
-  return list;
+  return index;
 }
 
-function addSlice(list: FeelingsList, parentPath: string[], color: string, feelingName: string, slice: FeelingSlice): void {
+function addSlice(index: FeelingsIndex, parentPath: string[], color: string, feelingName: string, slice: FeelingSlice): void {
   const path = [...parentPath, feelingName];
-  list[feelingName] = {
+  index[feelingName] = {
     color: color,
     path: path,
   };
   if (Array.isArray(slice)) {
     for (const subFeeling of slice) {
-      list[subFeeling] = {
+      index[subFeeling] = {
         color: color,
         path: [...path, subFeeling],
       };
     }
   } else {
     for (const subFeeling in slice) {
-      addSlice(list, path, color, subFeeling, slice[subFeeling]);
+      addSlice(index, path, color, subFeeling, slice[subFeeling]);
     }
   }
 }
 
-export const gloriaFeelings = createList(gloriaWheel);
+type FeelingsList = Array<{
+  name: string,
+  path: string[],
+  color: string,
+}>;
+
+
+function createList(index: FeelingsIndex): FeelingsList {
+  const list: FeelingsList = [];
+  
+  for (const name of Object.keys(index)) {
+    const feeling = index[name];
+    list.push({
+      name,
+      ...feeling
+    });
+  }
+
+  return list;
+}
+
+export const gloriaIndex = createIndex(gloriaWheel);
+export const gloriaList = createList(gloriaIndex);

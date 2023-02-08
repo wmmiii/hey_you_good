@@ -4,11 +4,13 @@ specifiers:
   esbuild: 0.9.6
   esbuild-svelte: 0.7.3
   svelte: 3.55.1
+  svelte-icons-pack: 2.0.0
   svelte-preprocess: 5.0.1
-  typescript: ^4.9.5
+  typescript: 4.9.5
 
 dependencies:
   svelte: 3.55.1
+  svelte-icons-pack: 2.0.0
 
 devDependencies:
   esbuild: 0.9.6
@@ -183,6 +185,10 @@ packages:
     dependencies:
       min-indent: 1.0.1
     dev: true
+
+  /svelte-icons-pack/2.0.0:
+    resolution: {integrity: sha512-B0EjVQrdURQCY/n//vBmJA/cbrT6ngv6Ja4FXVXUlZjcSKhoXpIgmcQQ0lPH5PpCcJNKbDQYyxPnUW1KTrkWJA==}
+    dev: false
 
   /svelte-preprocess/5.0.1_4x7phaipmicbaooxtnresslofa:
     resolution: {integrity: sha512-0HXyhCoc9rsW4zGOgtInylC6qj259E1hpFnJMJWTf+aIfeqh4O/QHT31KT2hvPEqQfdjmqBR/kO2JDkkciBLrQ==}

@@ -9,6 +9,7 @@ esbuild(
         ]) + [
             "//:node_modules/svelte",
             "//:node_modules/esbuild-svelte",
+            "//:node_modules/svelte-icons-pack",
             "//:node_modules/svelte-preprocess",
         ],
     config = "esbuild.config.mjs",

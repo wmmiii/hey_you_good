@@ -1,13 +1,20 @@
 <script lang="ts">
-  import { gloriaFeelings } from "../feelingsModel";
+  import BiCheck from "svelte-icons-pack/bi/BiCheck";
   import Button from "../components/Button.svelte";
+  import Icon from "svelte-icons-pack";
   import Page from "../components/Page.svelte";
-  import { transitionTo } from "../navigation";
-  import { recordFeeling } from "../storage/localDb";
   import TextInput from "../components/TextInput.svelte";
+  import { fade } from "svelte/transition";
+  import { gloriaList } from "../feelingsModel";
+  import { recordFeeling } from "../storage/localDb";
+  import { transitionTo } from "../navigation";
+  import { flip } from "svelte/animate";
 
   $: feeling = [];
   $: searchString = "";
+  $: filteredFeelings = gloriaList.filter((f) =>
+    isFeelingVisible(f.path, feeling, searchString)
+  );
 
   function isFeelingVisible(
     feelingPath: string[],
@@ -70,19 +77,25 @@
     placeholder="Search for a feeling..."
   />
 
-  {#each Object.keys(gloriaFeelings) as feelingName (feelingName)}
-    {@const f = gloriaFeelings[feelingName]}
-    {#if isFeelingVisible(f.path, feeling, searchString)}
-      <div
-        class="feeling"
-        class:selected={isFeelingSelected(f.path, feeling)}
-        style="background-color: {f.color}"
-        on:click={() => onFeelingSelected(f.path, feeling)}
-        on:keydown={() => onFeelingSelected(f.path, feeling)}
-      >
-        {feelingName}
+  {#each filteredFeelings as f (f.name)}
+    <div
+      class="feeling"
+      class:selected={isFeelingSelected(f.path, feeling)}
+      style="background-color: {f.color}"
+      on:click={() => onFeelingSelected(f.path, feeling)}
+      on:keydown={() => onFeelingSelected(f.path, feeling)}
+      in:fade={{duration: 200}}
+      animate:flip={{duration: 200}}
+    >
+      <div class="iconContainer">
+        {#if isFeelingSelected(f.path, feeling)}
+          <div in:fade={{ duration: 120 }} out:fade={{ duration: 120 }}>
+            <Icon src={BiCheck} color="currentColor" />
+          </div>
+        {/if}
       </div>
-    {/if}
+      {f.name}
+    </div>
   {/each}
 
   <div slot="footer" class="footer">
@@ -100,13 +113,15 @@
     justify-content: space-between;
   }
 
-  .feeling {
+  .feeling,
+  .feeling:focus {
     border-radius: var(--border-radius);
     color: #ffffff;
     cursor: pointer;
     font-size: var(--font-size-med);
     margin: var(--padding-small) 0;
     padding: var(--padding-med);
+    user-select: none;
   }
 
   .selected,
@@ -118,5 +133,12 @@
     display: block;
     margin: var(--padding-small) 0;
     width: 100%;
+  }
+
+  .iconContainer {
+    display: inline-block;
+    height: 1em;
+    margin-right: 8px;
+    width: 1em;
   }
 </style>
