@@ -7,7 +7,7 @@ body {
 }
 
 body {
-  --bg: linear-gradient(#fffdd6, #ffe28a);
+  --bg: #FFEDD2;
   --border-radius: 4px;
   --button-bg-active: #1f3a69;
   --button-bg-disabled: #5f5f5f;
@@ -22,7 +22,7 @@ body {
   --padding-med: 16px;
   --padding-small: 12px;
 
-  background-image: var(--bg);
+  background: var(--bg);
 }
 
 * {
