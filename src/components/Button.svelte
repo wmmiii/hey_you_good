@@ -1,11 +1,13 @@
 <script lang="ts">
   export let onClick: () => void = () => {};
   export let disabled = false;
+  export let flex = "0";
 </script>
 
 <button
   class="button"
   class:disabled
+  style="flex: {flex}"
   on:click={() => (disabled ? null : onClick())}
 >
   <slot />
@@ -19,8 +21,8 @@
     color: var(--button-color);
     cursor: pointer;
     font-size: var(--font-size-large);
+    min-width: 0;
     padding: var(--padding-med);
-    min-width: 256px;
   }
 
   .button:hover {
