@@ -9,12 +9,19 @@ const shouldCache = (fileName: string): boolean => {
 
 self.addEventListener('install', (event: any) => {
   event.waitUntil((async () => {
+    const oldCaches = await caches.keys();
+
     const cache = await caches.open(cacheName);
     const response = await fetch('/file_manifest.json');
     const jsonBody = await response.json();
     const files = jsonBody['Files'] as string[];
-    cache.addAll(files.filter(shouldCache));
-    cache.add('/');
+    await cache.addAll(files.filter(shouldCache));
+    await cache.add('/');
+    
+    for (let c of oldCaches) {
+      console.log('deleting cache', c);
+      await caches.delete(c);
+    }
   })());
 
   (self as any).skipWaiting();
