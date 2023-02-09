@@ -1,41 +1,59 @@
 <script lang="ts">
   export let onClick: () => void = () => {};
+  export let background = 'var(--button-bg)';
   export let disabled = false;
-  export let flex = "0";
+  export let flex = '0';
 </script>
 
 <button
   class="button"
   class:disabled
-  style="flex: {flex}"
+  class:icon-only={$$slots.icon && !$$slots.default}
+  style="background: {background}; flex: {flex}"
   on:click={() => (disabled ? null : onClick())}
 >
+  {#if $$slots.icon}
+  <div class="icon">
+    <slot name="icon" />
+  </div>
+  {/if}
   <slot />
 </button>
 
 <style>
   .button {
-    background: var(--button-bg);
+    align-items: center;
     border-radius: var(--border-radius);
     border: none;
     color: var(--button-color);
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
     font-size: var(--font-size-large);
-    min-width: 0;
+    gap: var(--padding-med);
+    justify-content: center;
     padding: var(--padding-med);
   }
 
+  .icon-only {
+    border-radius: 50%;
+  }
+
   .button:hover {
-    background: var(--button-bg-hover);
+    filter: brightness(1.2);
   }
 
   .button:active {
-    background: var(--button-bg-active);
+    filter: brightness(0.8);
   }
 
   .disabled {
-    /* !important because I'm lazy. */
-    background: var(--button-bg-disabled) !important;
+    filter: contrast(0.6) grayscale(1) !important;
     cursor: default;
+  }
+
+  .icon {
+    height: 1em;
+    width: 1em;
   }
 </style>

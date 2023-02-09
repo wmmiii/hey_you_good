@@ -1,14 +1,14 @@
 <script lang="ts">
   import BiCheck from "svelte-icons-pack/bi/BiCheck";
   import Button from "../components/Button.svelte";
-  import Icon from "svelte-icons-pack";
+  import Icon from "../components/Icon.svelte";
   import Page from "../components/Page.svelte";
   import TextInput from "../components/TextInput.svelte";
   import { fade } from "svelte/transition";
+  import { flip } from "svelte/animate";
   import { gloriaList } from "../feelingsModel";
   import { recordFeeling } from "../storage/localDb";
   import { transitionTo } from "../navigation";
-  import { flip } from "svelte/animate";
 
   $: feeling = [];
   $: searchString = "";
@@ -87,7 +87,7 @@
       <div class="iconContainer">
         {#if isFeelingSelected(f.path, feeling)}
           <div in:fade={{ duration: 120 }} out:fade={{ duration: 120 }}>
-            <Icon src={BiCheck} color="currentColor" />
+            <Icon src={BiCheck} color="currentColor" viewBox="0 0 20 20" />
           </div>
         {/if}
       </div>
