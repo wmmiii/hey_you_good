@@ -1,9 +1,6 @@
-// This line changes the hash of the file so the service-worker will re-install.
-console.log('Service worker for build:', '%BUILD_CHECKSUM%');
-
 declare const clients: any;
 
-const cacheName = 'web-cache';
+const cacheName = 'web-cache-%BUILD_CHECKSUM%';
 
 const shouldCache = (fileName: string): boolean => {
   return fileName.indexOf('service_worker.js') < 0
@@ -19,11 +16,12 @@ self.addEventListener('install', (event: any) => {
     cache.addAll(files.filter(shouldCache));
     cache.add('/');
   })());
+
+  (self as any).skipWaiting();
 });
 
-self.addEventListener('activate', (event: any) => {
-  event.waitUntil(clients.claim());
-  (self as any).skipWaiting();
+self.addEventListener('activate', () => {
+  console.log('Service worker activated for build:', '%BUILD_CHECKSUM%');
 });
 
 self.addEventListener('fetch', (event: any) => {
