@@ -71,7 +71,7 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
     color: '#ab7bb5',
     subFeelings: {
       'Disapproving': ['Judgemental'],
-      'Disappointed': ['Appalled', 'Revolted'],
+      'Upset': ['Appalled', 'Revolted'],
       'Awful': ['Nauseated', 'Detestable'],
       'Repelled': ['Horrified', 'Hesitant'],
     },
@@ -80,7 +80,7 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
     color: '#ce7c87',
     subFeelings: {
       'Hurt': ['Embarrassed', 'Disappointed'],
-      'Depressed': ['Inferior', 'Empty'],
+      'Depressed': ['Unsatisfactory', 'Empty'],
       'Guilty': ['Remorseful', 'Ashamed'],
       'Despair': ['Powerless', 'Grief'],
       'Vulnerable': ['Fragile', 'Victimized'],

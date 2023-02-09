@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Index from "./pages/Index.svelte";
-	import { currentPage } from "./navigation";
 	import CheckIn from "./pages/CheckIn.svelte";
+	import Index from "./pages/Index.svelte";
+	import Settings from "./pages/Settings.svelte";
+	import { currentPage } from "./navigation";
 
 	let page;
 	currentPage.subscribe((value) => {
@@ -14,6 +15,8 @@
 		<Index />
 	{:else if page === "check-in"}
 		<CheckIn />
+	{:else if page === "settings"}
+		<Settings />
 	{/if}
 </div>
 
