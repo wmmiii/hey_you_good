@@ -25,6 +25,18 @@ body {
   background: var(--bg);
 }
 
+@media (max-width: 600px) {
+  body {
+  --border-radius: 2px;
+  --font-size-large: 18px;
+  --font-size-med: 14px;
+  --input-border-focus: 1px solid #a7a7a7;
+  --input-border: 1px solid transparent;
+  --padding-med: 8px;
+  --padding-small: 6px;
+  }
+}
+
 * {
   font-family: "Raleway", sans-serif;
 }

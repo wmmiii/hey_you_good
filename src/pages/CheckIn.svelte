@@ -48,10 +48,7 @@
     feelingPath: string[],
     existingPath: string[]
   ): void {
-    if (
-      feelingPath.length === existingPath.length &&
-      feelingPath.every((f, i) => f === existingPath[i])
-    ) {
+    if (isFeelingSelected(feelingPath, existingPath)) {
       const newPath = [...feelingPath];
       newPath.pop();
       feeling = newPath;
@@ -84,8 +81,8 @@
       style="background-color: {f.color}"
       on:click={() => onFeelingSelected(f.path, feeling)}
       on:keydown={() => onFeelingSelected(f.path, feeling)}
-      in:fade={{duration: 200}}
-      animate:flip={{duration: 200}}
+      in:fade={{ duration: 200 }}
+      animate:flip={{ duration: 200 }}
     >
       <div class="iconContainer">
         {#if isFeelingSelected(f.path, feeling)}
@@ -99,10 +96,12 @@
   {/each}
 
   <div slot="footer" class="footer">
-    <Button onClick={() => transitionTo("index", "slide-right")}
-      >Back to home</Button
-    >
-    <Button onClick={saveFeeling} disabled={feeling.length < 1}>Save</Button>
+    <Button onClick={() => transitionTo("index", "slide-right")} flex="1">
+      Back to home
+    </Button>
+    <Button onClick={saveFeeling} disabled={feeling.length < 1} flex="1">
+      Save
+    </Button>
   </div>
 </Page>
 
@@ -110,7 +109,8 @@
   .footer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: var(--padding-med);
+    padding-top: var(--padding-med);
   }
 
   .feeling,
