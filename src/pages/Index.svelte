@@ -1,21 +1,25 @@
 <script lang="ts">
-  import BiCalendar from 'svelte-icons-pack/bi/BiCalendar';
-  import BiCheckDouble from 'svelte-icons-pack/bi/BiCheckDouble';
-  import BiCog from 'svelte-icons-pack/bi/BiCog';
-  import Button from '../components/Button.svelte';
-  import Icon from '../components/Icon.svelte';
-  import Page from '../components/Page.svelte';
-  import { transitionTo } from '../navigation';
+  import BiCalendar from "svelte-icons-pack/bi/BiCalendar";
+  import BiCheckDouble from "svelte-icons-pack/bi/BiCheckDouble";
+  import BiCog from "svelte-icons-pack/bi/BiCog";
+  import Button from "../components/Button.svelte";
+  import Icon from "../components/Icon.svelte";
+  import LastWeek from "../components/LastWeek.svelte";
+  import Page from "../components/Page.svelte";
+  import { transitionTo } from "../navigation";
 </script>
 
 <Page globalClass="index-content">
   <div slot="header" class="header">
     <div style="flex: 1" />
-    <Button onClick={() => transitionTo('settings', 'fade-push')}>
+    <Button onClick={() => transitionTo("settings", "fade-push")}>
       <Icon slot="icon" src={BiCog} color="currentColor" viewBox="0 0 24 24" />
     </Button>
   </div>
-  <Button onClick={() => transitionTo('check-in', 'slide-left')}>
+
+  <LastWeek />
+
+  <Button onClick={() => transitionTo("check-in", "slide-left")}>
     <Icon
       slot="icon"
       src={BiCheckDouble}
@@ -25,7 +29,7 @@
     />
     Check-In
   </Button>
-  <Button>
+  <!-- <Button>
     <Icon
       slot="icon"
       src={BiCalendar}
@@ -33,7 +37,7 @@
       viewBox="0 0 24 24"
     />
     Daily Log
-  </Button>
+  </Button> -->
   <div class="footer" slot="footer">Build version %BUILD_CHECKSUM%</div>
 </Page>
 

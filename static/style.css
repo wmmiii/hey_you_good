@@ -9,8 +9,10 @@ body {
 body {
   --bg: #FFEDD2;
   --border-radius: 4px;
+  --border: rgba(0, 0, 0, 0.2);
   --button-bg: #284a85;
   --button-color: #ffffff;
+  --col-success: #006716;
   --font-size-large: 24px;
   --font-size-med: 18px;
   --input-bg: #ffffff;

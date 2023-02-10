@@ -51,6 +51,7 @@ export async function getFeelings(from: Date, to: Date): Promise<Feeling[]> {
       const cursor = (event.target as any).result as IDBCursorWithValue;
       if (cursor) {
         list.push(cursor.value);
+        cursor.continue();
       } else {
         resolve(list);
       }
