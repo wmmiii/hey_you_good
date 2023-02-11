@@ -1,5 +1,4 @@
 <script lang="ts">
-  import BiCalendar from "svelte-icons-pack/bi/BiCalendar";
   import BiCheckDouble from "svelte-icons-pack/bi/BiCheckDouble";
   import BiCog from "svelte-icons-pack/bi/BiCog";
   import Button from "../components/Button.svelte";
