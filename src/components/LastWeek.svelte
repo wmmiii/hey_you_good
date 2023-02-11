@@ -28,65 +28,51 @@
 
 <div>
   <h2>Over the last week...</h2>
-  <table class="week">
-    <tr>
-      {#each days as day}
-        <th>
-          {day.date.toLocaleString("default", { weekday: "short" })}
-        </th>
-      {/each}
-    </tr>
-    <tr>
-      {#each days as day, i}
-        <td>
-          {#await day.checkIn then checkIn}
-            {#if checkIn}
-              <div class="check-in" in:fade={{ delay: 100 * i }}>
-                <Icon
-                  size="24"
-                  src={BiCheckCircle}
-                  color="var(--col-success)"
-                  viewBox="0 0 24 24"
-                />
-              </div>
-            {/if}
-          {/await}
-        </td>
-      {/each}
-    </tr>
-  </table>
+  <div class="week">
+    {#each days as day}
+      <div>
+        {day.date.toLocaleString("default", { weekday: "short" })}
+      </div>
+    {/each}
+    {#each days as day, i}
+      <div>
+        {#await day.checkIn then checkIn}
+          {#if checkIn}
+            <div in:fade={{ delay: 100 * i }}>
+              <Icon
+                size="24"
+                src={BiCheckCircle}
+                color="var(--col-success)"
+                viewBox="0 0 24 24"
+              />
+            </div>
+          {/if}
+        {/await}
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>
   .week {
-    border-collapse: collapse;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     width: 100%;
   }
-  .week th,
-  .week td {
-    padding: var(--padding-small);
-    border: 1px solid var(--border);
-  }
-  .week tr td:first-child,
-  .week tr th:first-child {
-    border-left: none;
-  }
-  .week tr:first-child th {
-    border-top: none;
-  }
-  .week tr td:last-child,
-  .week tr th:last-child {
-    border-right: none;
-  }
-  .week tr:last-child td {
-    border-bottom: none;
-  }
-
-  .check-in {
+  .week > div {
     align-items: center;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: center;
     min-height: 24px;
     min-width: 24px;
+    padding: var(--padding-small);
+  }
+  .week > div:nth-child(7n) {
+    border-right: none;
+  }
+  .week > div:nth-child(n + 8) {
+    border-bottom: none;
   }
 </style>
