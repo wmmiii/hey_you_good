@@ -99,6 +99,7 @@ function triggerNotification(message: string) {
   if (Notification.permission === 'granted') {
     self.registration.showNotification(message, {
       lang: 'EN',
+      badge: '/icons/icon-maskable-monochrome.png',
       icon: '/icons/icon.png',
       vibrate: vibrationPattern,
     });
