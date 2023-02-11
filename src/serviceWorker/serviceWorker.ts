@@ -1,7 +1,7 @@
-import { UserSettings } from './storage/userSettings';
+import { UserSettings } from '../storage/userSettings';
 import { Message } from './messages';
 
-declare const clients: any;
+declare const self: any;
 
 const cacheName = 'web-cache-%BUILD_CHECKSUM%';
 const vibrationPattern = [50, 250, 50, 150, 50, 250, 50];
@@ -56,7 +56,11 @@ self.addEventListener('fetch', (event: any) => {
 
 self.addEventListener('message', (event) => {
   const message = event.data as Message;
-  if (message.subject === 'user-settings') {
+  if (message.subject === 'test-notification') {
+    setTimeout(() => {
+      triggerNotification('Yay! Notifications work!');
+    });
+  } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
     setupNextNotification();
   }
@@ -78,26 +82,24 @@ function setupNextNotification(): void {
       const checkInTime = new Date(now);
       checkInTime.setHours(t.h, t.m, 0);
       if (checkInTime < now) {
-        checkInTime.setDate(checkInTime.getDate());
+        checkInTime.setDate(checkInTime.getDate() + 1);
       }
       return checkInTime;
     })
     .sort((a, b) => a.getTime() - b.getTime())
   [0];
 
-  console.log(`Next notification at ${next.toLocaleString()}`);
-
   notificationTimeout = setTimeout(() => {
-    triggerNotification();
+    triggerNotification('Check-in reminder!');
     setupNextNotification();
   }, next.getTime() - now.getTime());
 }
 
-function triggerNotification() {
+function triggerNotification(message: string) {
   if (Notification.permission === 'granted') {
-    new Notification('Check-in reminder!', {
+    self.registration.showNotification(message, {
       lang: 'EN',
-      image: '/icons/icon.png',
+      icon: '/icons/icon.png',
       vibrate: vibrationPattern,
     });
   }

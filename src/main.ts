@@ -1,8 +1,8 @@
 import "./browserHistory";
 import App from "./App.svelte";
 import { initStorage } from './storage/localDb';
-import { getUserSettings, notifyServiceWorker, setUserSettings } from "./storage/userSettings";
-import { UserSettingsMessage } from "./messages";
+import { getUserSettings, setUserSettings } from "./storage/userSettings";
+import { sendMessageToServiceWorker } from "./serviceWorker/messagePassing";
 
 const swUpdateInterval = 1000 * 60 * 60;
 
@@ -26,7 +26,10 @@ if (navigator.serviceWorker != null) {
       setInterval(() => reg.update, swUpdateInterval);
       const userSettings = getUserSettings();
       if (userSettings != null) {
-        notifyServiceWorker(userSettings);
+        sendMessageToServiceWorker({
+          subject: 'user-settings',
+          settings: userSettings,
+        });
       }
     });
 }

@@ -2,6 +2,7 @@
   import Button from "../components/Button.svelte";
   import Page from "../components/Page.svelte";
   import { transitionTo } from "../navigation";
+  import { sendMessageToServiceWorker } from "../serviceWorker/messagePassing";
 
   $: permission = Notification.permission;
 </script>
@@ -9,18 +10,29 @@
 <Page>
   <h1 slot="header">Settings</h1>
 
-  {#if permission === "granted"}
-    <Button disabled>Notifications Enabled!</Button>
-  {:else}
+  <div class="buttonRow">
+    {#if permission === "granted"}
+      <Button disabled flex="1">Notifications Enabled!</Button>
+    {:else}
+      <Button
+        flex="1"
+        onClick={() =>
+          Notification.requestPermission().then((p) => (permission = p))}
+      >
+        Enable Notifications
+      </Button>
+    {/if}
     <Button
+      disabled={permission !== "granted"}
+      flex="1"
       onClick={() =>
-        Notification.requestPermission().then((p) => (permission = p))}
+        sendMessageToServiceWorker({ subject: "test-notification" })}
     >
-      Enable Notifications
+      Test notifications
     </Button>
-  {/if}
+  </div>
 
-  <div slot="footer" class="footer">
+  <div slot="footer" class="footer buttonRow">
     <Button onClick={() => transitionTo("index", "fade-pop")} flex="1">
       Cancel
     </Button>
@@ -31,10 +43,13 @@
 </Page>
 
 <style>
-  .footer {
+  .buttonRow {
     display: flex;
     flex-direction: row;
     gap: var(--padding-med);
+    width: 100%;
+  }
+  .footer {
     padding-top: var(--padding-med);
   }
 </style>
