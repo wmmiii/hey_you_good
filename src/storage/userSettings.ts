@@ -1,4 +1,5 @@
-import { UserSettingsMessage } from "../messages";
+import { sendMessageToServiceWorker } from "../serviceWorker/messagePassing";
+import { UserSettingsMessage } from "../serviceWorker/messages";
 
 const userSettingsKey = 'user-settings';
 
@@ -26,13 +27,8 @@ export function getUserSettings(): UserSettings | null {
 
 export async function setUserSettings(settings: UserSettings): Promise<void> {
   localStorage.setItem(userSettingsKey, JSON.stringify(settings));
-  notifyServiceWorker(settings)
-}
-
-export async function notifyServiceWorker(settings: UserSettings): Promise<void> {
-  const sw = await navigator.serviceWorker.getRegistration();
-  sw?.active?.postMessage({
+  sendMessageToServiceWorker({
     subject: 'user-settings',
     settings: settings,
-  } as UserSettingsMessage);
+  });
 }

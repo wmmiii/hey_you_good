@@ -22,6 +22,6 @@ esbuild(
     name = "service_worker",
     srcs =
         glob(["**/*.ts"]),
-    entry_point = "serviceWorker.ts",
+    entry_point = "serviceWorker/serviceWorker.ts",
     visibility = ["//:__pkg__"],
 )

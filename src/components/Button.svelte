@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let onClick: () => void = () => {};
+  export let onClick: () => any = () => {};
   export let background = 'var(--button-bg)';
   export let disabled = false;
   export let flex = '0';
