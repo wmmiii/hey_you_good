@@ -6,6 +6,8 @@
     getSWRegistration,
     sendMessageToServiceWorker,
   } from "../serviceWorker/clientSide";
+  import { UserSettings, userSettingsWatcher } from "../storage/userSettings";
+  import CheckIn from "./CheckIn.svelte";
 
   $: permission = Notification.permission;
 
@@ -14,12 +16,19 @@
     await registration.update();
     location.reload();
   };
+
+  let userSettings: UserSettings;
+  userSettingsWatcher.subscribe((value) => {
+    userSettings = value;
+  });
 </script>
 
 <Page>
   <h1 slot="header">Settings</h1>
 
   <div class="contents">
+    <h2>Notifications</h2>
+
     <div class="buttonRow">
       {#if permission === "granted"}
         <Button disabled flex="1">Notifications Enabled!</Button>
@@ -41,6 +50,19 @@
         Test notifications
       </Button>
     </div>
+
+    <div>
+      {#each userSettings.checkInTimes as checkInTime}
+        <div>
+          {String(checkInTime.h).padStart(2, "0")}:{String(
+            checkInTime.m
+          ).padStart(2, "0")}
+        </div>
+      {/each}
+    </div>
+
+    <h2>Advanced</h2>
+
     <Button onClick={forceUpdate}>Force app update</Button>
   </div>
 

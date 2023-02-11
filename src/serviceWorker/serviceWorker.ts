@@ -24,7 +24,7 @@ self.addEventListener('install', (event: any) => {
     await cache.addAll(files.filter(shouldCache));
     await cache.add('/');
 
-    for (let c of oldCaches) {
+    for (let c of oldCaches.filter((c) => c !== cacheName)) {
       console.log('deleting cache', c);
       await caches.delete(c);
     }
