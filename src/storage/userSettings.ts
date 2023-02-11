@@ -1,5 +1,4 @@
-import { sendMessageToServiceWorker } from "../serviceWorker/messagePassing";
-import { UserSettingsMessage } from "../serviceWorker/messages";
+import { sendMessageToServiceWorker } from "../serviceWorker/clientSide";
 
 const userSettingsKey = 'user-settings';
 
