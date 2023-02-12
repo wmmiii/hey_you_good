@@ -1,6 +1,8 @@
 <script lang="ts">
+  import BiCalendar from "svelte-icons-pack/bi/BiCalendar";
   import BiCheckDouble from "svelte-icons-pack/bi/BiCheckDouble";
   import BiCog from "svelte-icons-pack/bi/BiCog";
+  import BiHistory from "svelte-icons-pack/bi/BiHistory";
   import Button from "../components/Button.svelte";
   import Icon from "../components/Icon.svelte";
   import LastWeek from "../components/LastWeek.svelte";
@@ -28,7 +30,7 @@
     />
     Check-In
   </Button>
-  <!-- <Button>
+  <Button onClick={() => transitionTo("daily-log", "slide-left")}>
     <Icon
       slot="icon"
       src={BiCalendar}
@@ -36,7 +38,16 @@
       viewBox="0 0 24 24"
     />
     Daily Log
-  </Button> -->
+  </Button>
+  <Button onClick={() => transitionTo("history", "slide-left")}>
+    <Icon
+      slot="icon"
+      src={BiHistory}
+      color="currentColor"
+      viewBox="0 0 24 24"
+    />
+    History
+  </Button>
   <div class="footer" slot="footer">Build version %BUILD_CHECKSUM%</div>
 </Page>
 

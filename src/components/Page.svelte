@@ -32,6 +32,7 @@
 <style>
   .container {
     bottom: 0;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: var(--padding-med);
@@ -41,7 +42,6 @@
     position: absolute;
     top: 0;
     width: 100%;
-    box-sizing: border-box;
   }
 
   .header {

@@ -2,6 +2,7 @@
   export let onClick: () => any = () => {};
   export let background = 'var(--button-bg)';
   export let disabled = false;
+  export let tabIndex = 0;
   export let flex = '0';
 </script>
 
@@ -10,6 +11,7 @@
   class:disabled
   class:icon-only={$$slots.icon && !$$slots.default}
   style="background: {background}; flex: {flex}"
+  tabindex={tabIndex}
   on:click={() => (disabled ? null : onClick())}
 >
   {#if $$slots.icon}
