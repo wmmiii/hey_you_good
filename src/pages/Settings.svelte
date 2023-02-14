@@ -7,11 +7,12 @@
     sendMessageToServiceWorker,
   } from "../serviceWorker/clientSide";
   import { UserSettings, userSettingsWatcher } from "../storage/userSettings";
-  import CheckIn from "./CheckIn.svelte";
+  import { clearAllCaches } from "../storage/cache";
 
   $: permission = Notification.permission;
 
   const forceUpdate = async () => {
+    await clearAllCaches();
     const registration = await getSWRegistration();
     await registration.update();
     location.reload();
