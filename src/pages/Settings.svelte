@@ -94,10 +94,7 @@
 
   <div slot="footer" class="footer buttonRow">
     <Button onClick={() => transitionTo("index", "fade-pop")} flex="1">
-      Cancel
-    </Button>
-    <Button onClick={() => transitionTo("index", "fade-pop")} flex="1">
-      Save
+      Done
     </Button>
   </div>
 </Page>
