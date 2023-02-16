@@ -44,7 +44,7 @@ self.addEventListener('message', (event) => {
   } else if (message.subject === 'test-notification') {
     setTimeout(() => {
       triggerNotification('Yay! Notifications work!', new Date());
-    });
+    }, 10_000);
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
     setupNextNotification();
