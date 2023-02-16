@@ -2,13 +2,14 @@ import "./browserHistory";
 import App from "./App.svelte";
 import { initStorage } from './storage/localDb';
 import { getUserSettings, setUserSettings } from "./storage/userSettings";
-import { getSWRegistration } from "./serviceWorker/clientSide";
+import { getSWRegistration, initMessageListener } from "./serviceWorker/clientSide";
 
 initStorage();
 
 // Initialize the service worker.
 getSWRegistration()
   .then(() => {
+    initMessageListener();
     if (getUserSettings() == null) {
       setUserSettings({
         checkInTimes: [

@@ -4,10 +4,13 @@
   import { transitionTo } from "../navigation";
   import {
     getSWRegistration,
+    registerMessageListener,
+    removeMessageListener,
     sendMessageToServiceWorker,
   } from "../serviceWorker/clientSide";
   import { UserSettings, userSettingsWatcher } from "../storage/userSettings";
   import { clearAllCaches } from "../storage/cache";
+  import { NextNotificationResponse } from "../serviceWorker/messages";
 
   $: permission = Notification.permission;
 
@@ -21,6 +24,15 @@
   let userSettings: UserSettings;
   userSettingsWatcher.subscribe((value) => {
     userSettings = value;
+  });
+
+  let nextNotification: Promise<Date | null> = new Promise((resolve) => {
+    const listener = (message: NextNotificationResponse) => {
+      removeMessageListener(listener);
+      resolve(new Date(message.timestamp));
+    };
+    registerMessageListener("next-notification-response", listener);
+    sendMessageToServiceWorker({ subject: "next-notification-request" });
   });
 </script>
 
@@ -50,6 +62,19 @@
       >
         Test notifications
       </Button>
+    </div>
+
+    <div>
+      <h3>Next Notification</h3>
+      {#await nextNotification}
+        Loading...
+      {:then notification}
+        {#if notification != null}
+          {notification.toLocaleString()}
+        {:else}
+          No notification set.
+        {/if}
+      {/await}
     </div>
 
     <div>
