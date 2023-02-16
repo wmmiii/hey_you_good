@@ -1,3 +1,4 @@
+import { listen } from "svelte/internal";
 import { getUserSettings } from "../storage/userSettings";
 import { Message } from "./messages";
 
@@ -36,4 +37,32 @@ export async function sendMessageToServiceWorker(message: Message): Promise<void
   } else {
     sw?.active?.postMessage(message);
   }
+}
+
+interface Listener<T extends Message> {
+  subject: T['subject'];
+  consumer: (message: T) => any;
+}
+
+let listeners: Listener<any>[] = [];
+
+export function initMessageListener() {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const message = event.data as Message;
+    listeners.forEach((l) => {
+      if (l.subject === message.subject) {
+        l.consumer(message);
+      }
+    })
+  });
+}
+
+export function registerMessageListener<T extends Message>(subject: T['subject'], listener: (message: T) => any): void {
+  if (listeners.filter((l) => l.consumer === listener).length <= 0) {
+    listeners.push({subject, consumer: listener});
+  }
+}
+
+export function removeMessageListener<T extends Message>(listener: (message: T) => any): void {
+  listeners = listeners.filter((l) => l.consumer !== listener);
 }

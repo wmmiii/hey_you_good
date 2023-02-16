@@ -36,7 +36,12 @@ self.addEventListener('fetch', (event: any) => {
 
 self.addEventListener('message', (event) => {
   const message = event.data as Message;
-  if (message.subject === 'test-notification') {
+  if (message.subject === 'next-notification-request') {
+    sendMessageToClients({
+      subject: 'next-notification-response',
+      timestamp: nextNotification?.date.getTime() || null,
+    });
+  } else if (message.subject === 'test-notification') {
     setTimeout(() => {
       triggerNotification('Yay! Notifications work!');
     });
@@ -46,10 +51,22 @@ self.addEventListener('message', (event) => {
   }
 });
 
-let notificationTimeout: number = 0;
+async function sendMessageToClients(message: Message): Promise<void> {
+  const allClients = await self.clients.matchAll({
+    includeUncontrolled: true,
+  });
+  allClients.forEach((c) => c.postMessage(message));
+}
+
+interface NextNotification {
+  timeoutId: number;
+  date: Date;
+}
+
+let nextNotification: NextNotification | null = null;
 
 function setupNextNotification(): void {
-  clearTimeout(notificationTimeout);
+  clearTimeout(nextNotification?.timeoutId || 0);
 
   const checkInTimes = userSettings?.checkInTimes;
   if (checkInTimes == null || checkInTimes.length == 0) {
@@ -69,10 +86,15 @@ function setupNextNotification(): void {
     .sort((a, b) => a.getTime() - b.getTime())
   [0];
 
-  notificationTimeout = setTimeout(() => {
+  const timeout = setTimeout(() => {
     triggerNotification('Check-in reminder!');
     setupNextNotification();
   }, next.getTime() - now.getTime());
+
+  nextNotification = {
+    timeoutId: timeout,
+    date: next,
+  };
 }
 
 function triggerNotification(message: string) {
