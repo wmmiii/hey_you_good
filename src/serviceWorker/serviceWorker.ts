@@ -43,7 +43,7 @@ self.addEventListener('message', (event) => {
     });
   } else if (message.subject === 'test-notification') {
     setTimeout(() => {
-      triggerNotification('Yay! Notifications work!');
+      triggerNotification('Yay! Notifications work!', new Date());
     });
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
@@ -87,7 +87,7 @@ function setupNextNotification(): void {
   [0];
 
   const timeout = setTimeout(() => {
-    triggerNotification('Check-in reminder!');
+    triggerNotification('Check-in reminder!', next);
     setupNextNotification();
   }, next.getTime() - now.getTime());
 
@@ -97,12 +97,13 @@ function setupNextNotification(): void {
   };
 }
 
-function triggerNotification(message: string) {
+function triggerNotification(message: string, date: Date) {
   if (Notification.permission === 'granted') {
     self.registration.showNotification(message, {
       lang: 'EN',
       badge: '/icons/icon-maskable-monochrome.png',
       icon: '/icons/icon.png',
+      timestamp: date.getTime(),
       vibrate: vibrationPattern,
     });
   }
