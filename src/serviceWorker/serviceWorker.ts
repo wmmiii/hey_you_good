@@ -109,22 +109,6 @@ function setupNextNotification(): void {
   };
 }
 
-function postponeNotification() {
-
-  clearTimeout(nextNotification?.timeoutId || 0);
-
-
-  const timeout = setTimeout(() => {
-    triggerNotification('Check-in reminder!', next);
-    setupNextNotification();
-  }, next.getTime() - now.getTime());
-
-  nextNotification = {
-    timeoutId: timeout,
-    date: next,
-  };
-}
-
 function triggerNotification(message: string, date: Date) {
   if (Notification.permission === 'granted') {
     self.registration.showNotification(message, {
