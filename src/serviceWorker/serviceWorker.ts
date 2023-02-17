@@ -48,7 +48,7 @@ self.addEventListener('message', (event) => {
       }, {
         delay: 1000,
         priority: 'user-visible',
-      });
+      }).catch(() => {/* Ignored */});
     }
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
@@ -71,7 +71,7 @@ interface NextNotification {
 let nextNotification: NextNotification | null = null;
 
 function setupNextNotification(): void {
-  nextNotification?.abortController.abort();
+  nextNotification?.abortController.abort('Overriding with next notification.');
 
   const checkInTimes = userSettings?.checkInTimes;
   if (checkInTimes == null || checkInTimes.length == 0) {
@@ -104,7 +104,7 @@ function setupNextNotification(): void {
     delay: next.getTime() - now.getTime(),
     priority: 'user-visible',
     signal: abortController.signal
-  });
+  }).catch(() => {/* Ignored */});
 
   nextNotification = {
     date: next,
