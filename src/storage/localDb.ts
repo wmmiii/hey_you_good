@@ -23,9 +23,7 @@ export function initStorage(): Promise<void> {
       if (!db.objectStoreNames.contains(logEntriesOS)) {
         db.createObjectStore(logEntriesOS, { keyPath: 'ts' });
       }
-
-      resolve(db);
-    }
+    };
   });
 
   return dbPromise.then(() => { });
