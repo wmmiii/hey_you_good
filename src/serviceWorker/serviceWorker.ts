@@ -14,11 +14,8 @@ self.addEventListener('install', (event: any) => {
   (self as any).skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', () => {
   console.log('Service worker activated for build:', '%BUILD_CHECKSUM%');
-
-  // Hack to keep the service worker alive on mobile.
-  event.waitUntil(new Promise(() => {}));
 });
 
 self.addEventListener('fetch', (event: any) => {
