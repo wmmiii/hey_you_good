@@ -1,5 +1,3 @@
-import { listen } from "svelte/internal";
-import { getUserSettings } from "../storage/userSettings";
 import { Message } from "./messages";
 
 const swUpdateInterval = 1000 * 60 * 60;
@@ -18,20 +16,13 @@ export function getSWRegistration(): Promise<ServiceWorkerRegistration> {
 
   registration.then((reg) => {
     setInterval(() => reg.update, swUpdateInterval);
-    const userSettings = getUserSettings();
-    if (userSettings != null) {
-      sendMessageToServiceWorker({
-        subject: 'user-settings',
-        settings: userSettings,
-      });
-    }
   });
 
   return registration;
 }
 
 export async function sendMessageToServiceWorker(message: Message): Promise<void> {
-  const sw = await navigator.serviceWorker.getRegistration();
+  const sw = await getSWRegistration();
   if (sw?.active == null) {
     console.error('Could not find active service worker to post message to!', message);
   } else {
