@@ -14,7 +14,7 @@ self.addEventListener('install', (event: any) => {
   (self as any).skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', () => {
   console.log('Service worker activated for build:', '%BUILD_CHECKSUM%');
 });
 
