@@ -25,6 +25,7 @@ type Prompt = TextPrompt;
 export interface UserSettings {
   checkInTimes: CheckInTime[];
   dailyPrompts: Prompt[];
+  dismissedInfo: string[];
 }
 
 export function getUserSettings(): UserSettings | null {

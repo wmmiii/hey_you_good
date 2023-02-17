@@ -7,7 +7,30 @@
   import Icon from "../components/Icon.svelte";
   import LastWeek from "../components/LastWeek.svelte";
   import Page from "../components/Page.svelte";
+  import WarningBox from "../components/WarningBox.svelte";
   import { transitionTo } from "../navigation";
+  import {
+    setUserSettings,
+    UserSettings,
+    userSettingsWatcher,
+  } from "../storage/userSettings";
+
+  const pwaWarningKey = "pwa-warning";
+
+  const isPwa =
+    (window.matchMedia &&
+      window.matchMedia("(display-mode: standalone)").matches) ||
+    window.navigator["standalone"] != null;
+
+  let userSettings: UserSettings | undefined;
+  userSettingsWatcher.subscribe((value) => (userSettings = value));
+
+  async function closePwaWarning(): Promise<void> {
+    if (userSettings?.dismissedInfo.indexOf(pwaWarningKey) < 0) {
+      userSettings.dismissedInfo.push(pwaWarningKey);
+      await setUserSettings(userSettings);
+    }
+  }
 </script>
 
 <Page globalClass="index-content">
@@ -17,6 +40,24 @@
       <Icon slot="icon" src={BiCog} color="currentColor" viewBox="0 0 24 24" />
     </Button>
   </div>
+
+  {#if !isPwa && userSettings?.dismissedInfo.indexOf(pwaWarningKey) < 0}
+    <WarningBox onCloseClicked={closePwaWarning}>
+      <p>
+        This app is designed to be installed by Google Chrome as a Progressive
+        Web App.
+      </p>
+      <p>
+        <a
+          href="https://support.google.com/chrome/answer/9658361"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Click here for more details.
+        </a>
+      </p>
+    </WarningBox>
+  {/if}
 
   <LastWeek />
 

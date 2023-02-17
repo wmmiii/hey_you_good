@@ -22,6 +22,7 @@ getSWRegistration()
         { type: 'text', prompt: 'What is one thing you are proud of today?' },
         { type: 'text', prompt: 'What are you looking forward to tomorrow?' },
       ],
+      dismissedInfo: [],
     };
 
     setUserSettings(Object.assign({}, defaultSettings, getUserSettings()));
