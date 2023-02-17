@@ -42,9 +42,21 @@ self.addEventListener('message', (event) => {
       timestamp: nextNotification?.date.getTime() || null,
     });
   } else if (message.subject === 'test-notification') {
-    setTimeout(() => {
-      triggerNotification('Yay! Notifications work!', new Date());
-    }, 10_000);
+    clearTimeout(nextNotification?.timeoutId || 0);
+
+    const now = new Date();
+    const next = new Date(now);
+    next.setMinutes(next.getMinutes() + 1);
+
+    const timeout = setTimeout(() => {
+      triggerNotification('Yay! Notifications work!', next);
+      setupNextNotification();
+    }, next.getTime() - now.getTime());
+  
+    nextNotification = {
+      timeoutId: timeout,
+      date: next,
+    };
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
     setupNextNotification();
