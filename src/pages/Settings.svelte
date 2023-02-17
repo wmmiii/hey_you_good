@@ -43,7 +43,9 @@
     <h2>Notifications</h2>
 
     <div class="buttonRow">
-      {#if permission === "granted"}
+      {#if self['scheduler'] == null}
+        <Button disabled flex="1">Notifications Not Available</Button>
+      {:else if permission === "granted"}
         <Button disabled flex="1">Notifications Enabled!</Button>
       {:else}
         <Button
@@ -55,7 +57,7 @@
         </Button>
       {/if}
       <Button
-        disabled={permission !== "granted"}
+        disabled={permission !== "granted" || self['scheduler'] == null}
         flex="1"
         onClick={() =>
           sendMessageToServiceWorker({ subject: "test-notification" })}
