@@ -42,21 +42,14 @@ self.addEventListener('message', (event) => {
       timestamp: nextNotification?.date.getTime() || null,
     });
   } else if (message.subject === 'test-notification') {
-    clearTimeout(nextNotification?.timeoutId || 0);
-
-    const now = new Date();
-    const next = new Date(now);
-    next.setMinutes(next.getMinutes() + 1);
-
-    const timeout = setTimeout(() => {
-      triggerNotification('Yay! Notifications work!', next);
-      setupNextNotification();
-    }, next.getTime() - now.getTime());
-  
-    nextNotification = {
-      timeoutId: timeout,
-      date: next,
-    };
+    if (self.scheduler != null) {
+      self.scheduler.postTask(() => {
+        triggerNotification('Yay! Notifications work!', new Date());
+      }, {
+        delay: 1000,
+        priority: 'user-visible',
+      });
+    }
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
     setupNextNotification();
@@ -71,17 +64,21 @@ async function sendMessageToClients(message: Message): Promise<void> {
 }
 
 interface NextNotification {
-  timeoutId: number;
+  abortController: AbortController;
   date: Date;
 }
 
 let nextNotification: NextNotification | null = null;
 
 function setupNextNotification(): void {
-  clearTimeout(nextNotification?.timeoutId || 0);
+  nextNotification?.abortController.abort();
 
   const checkInTimes = userSettings?.checkInTimes;
   if (checkInTimes == null || checkInTimes.length == 0) {
+    return;
+  }
+
+  if (self.scheduler == null) {
     return;
   }
 
@@ -98,14 +95,20 @@ function setupNextNotification(): void {
     .sort((a, b) => a.getTime() - b.getTime())
   [0];
 
-  const timeout = setTimeout(() => {
+  const abortController: AbortController = new AbortController();
+
+  self.scheduler.postTask(() => {
     triggerNotification('Check-in reminder!', next);
     setupNextNotification();
-  }, next.getTime() - now.getTime());
+  }, {
+    delay: next.getTime() - now.getTime(),
+    priority: 'user-visible',
+    signal: abortController.signal
+  });
 
   nextNotification = {
-    timeoutId: timeout,
     date: next,
+    abortController: abortController,
   };
 }
 
