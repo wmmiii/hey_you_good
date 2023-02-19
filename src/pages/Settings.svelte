@@ -34,6 +34,16 @@
     registerMessageListener("next-notification-response", listener);
     sendMessageToServiceWorker({ subject: "next-notification-request" });
   });
+
+  const checksumPromise = fetch("/real_manifest.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Could not fetch real manifest!');
+      } else {
+        return response.json();
+      }
+    })
+    .then((json) => json["Checksum"]);
 </script>
 
 <Page>
@@ -43,7 +53,7 @@
     <h2>Notifications</h2>
 
     <div class="buttonRow">
-      {#if self['scheduler'] == null}
+      {#if self["scheduler"] == null}
         <Button disabled flex="1">Notifications Not Available</Button>
       {:else if permission === "granted"}
         <Button disabled flex="1">Notifications Enabled!</Button>
@@ -57,7 +67,7 @@
         </Button>
       {/if}
       <Button
-        disabled={permission !== "granted" || self['scheduler'] == null}
+        disabled={permission !== "granted" || self["scheduler"] == null}
         flex="1"
         onClick={() =>
           sendMessageToServiceWorker({ subject: "test-notification" })}
@@ -91,7 +101,17 @@
 
     <h2>Advanced</h2>
 
-    <Button onClick={forceUpdate}>Force app update</Button>
+    {#await checksumPromise}
+      <p>Loading current checksum...</p>
+      <Button disabled={true}>Force app update</Button>
+    {:then checksum}
+      <p>Latest checksum: {checksum}</p>
+      {#if checksum === "%BUILD_CHECKSUM%"}
+        <Button disabled={true}>App up to date</Button>
+      {:else}
+        <Button onClick={forceUpdate}>Force app update</Button>
+      {/if}
+    {/await}
   </div>
 
   <div slot="footer" class="footer buttonRow">
