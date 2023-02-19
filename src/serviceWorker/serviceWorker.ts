@@ -23,13 +23,18 @@ self.addEventListener('fetch', (event: any) => {
     return;
   }
 
+  if (new URL(event.request.url).pathname === '/real_manifest.json') {
+    event.respondWith(fetch(new Request('/file_manifest.json')));
+    return;
+  }
+
   event.respondWith((async () => {
     const cachedResponse = await getCachedResponse(event.request);
 
     if (cachedResponse) {
       return cachedResponse;
     } else {
-      return fetch(event.request)
+      return fetch(event.request);
     };
   })());
 });
@@ -47,8 +52,8 @@ self.addEventListener('message', (event) => {
         triggerNotification('Yay! Notifications work!', new Date());
       }, {
         delay: 60_000,
-        priority: 'user-visible',
-      }).catch(() => {/* Ignored */});
+        priority: 'background',
+      }).catch(() => {/* Ignored */ });
     }
   } else if (message.subject === 'user-settings') {
     userSettings = message.settings;
@@ -104,7 +109,7 @@ function setupNextNotification(): void {
     delay: next.getTime() - now.getTime(),
     priority: 'background',
     signal: abortController.signal
-  }).catch(() => {/* Ignored */});
+  }).catch(() => {/* Ignored */ });
 
   nextNotification = {
     date: next,
