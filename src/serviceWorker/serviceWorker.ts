@@ -46,7 +46,7 @@ self.addEventListener('message', (event) => {
       self.scheduler.postTask(() => {
         triggerNotification('Yay! Notifications work!', new Date());
       }, {
-        delay: 1000,
+        delay: 60_000,
         priority: 'user-visible',
       }).catch(() => {/* Ignored */});
     }
@@ -102,7 +102,7 @@ function setupNextNotification(): void {
     setupNextNotification();
   }, {
     delay: next.getTime() - now.getTime(),
-    priority: 'user-visible',
+    priority: 'background',
     signal: abortController.signal
   }).catch(() => {/* Ignored */});
 
