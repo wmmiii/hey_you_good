@@ -1,5 +1,3 @@
-import { Message } from "./messages";
-
 const swUpdateInterval = 1000 * 60 * 60;
 
 let registration: Promise<ServiceWorkerRegistration>;
@@ -19,41 +17,4 @@ export function getSWRegistration(): Promise<ServiceWorkerRegistration> {
   });
 
   return registration;
-}
-
-export async function sendMessageToServiceWorker(message: Message): Promise<void> {
-  const sw = await getSWRegistration();
-  if (sw?.active == null) {
-    console.error('Could not find active service worker to post message to!', message);
-  } else {
-    sw?.active?.postMessage(message);
-  }
-}
-
-interface Listener<T extends Message> {
-  subject: T['subject'];
-  consumer: (message: T) => any;
-}
-
-let listeners: Listener<any>[] = [];
-
-export function initMessageListener() {
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    const message = event.data as Message;
-    listeners.forEach((l) => {
-      if (l.subject === message.subject) {
-        l.consumer(message);
-      }
-    })
-  });
-}
-
-export function registerMessageListener<T extends Message>(subject: T['subject'], listener: (message: T) => any): void {
-  if (listeners.filter((l) => l.consumer === listener).length <= 0) {
-    listeners.push({subject, consumer: listener});
-  }
-}
-
-export function removeMessageListener<T extends Message>(listener: (message: T) => any): void {
-  listeners = listeners.filter((l) => l.consumer !== listener);
 }
