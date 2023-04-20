@@ -2,17 +2,9 @@
   import Button from "../components/Button.svelte";
   import Page from "../components/Page.svelte";
   import { transitionTo } from "../navigation";
-  import {
-    getSWRegistration,
-    registerMessageListener,
-    removeMessageListener,
-    sendMessageToServiceWorker,
-  } from "../serviceWorker/clientSide";
+  import { getSWRegistration } from "../serviceWorker/clientSide";
   import { UserSettings, userSettingsWatcher } from "../storage/userSettings";
   import { clearAllCaches } from "../storage/cache";
-  import { NextNotificationResponse } from "../serviceWorker/messages";
-
-  $: permission = Notification.permission;
 
   const forceUpdate = async () => {
     await clearAllCaches();
@@ -26,19 +18,10 @@
     userSettings = value;
   });
 
-  let nextNotification: Promise<Date | null> = new Promise((resolve) => {
-    const listener = (message: NextNotificationResponse) => {
-      removeMessageListener(listener);
-      resolve(new Date(message.timestamp));
-    };
-    registerMessageListener("next-notification-response", listener);
-    sendMessageToServiceWorker({ subject: "next-notification-request" });
-  });
-
   const checksumPromise = fetch("/real_manifest.json")
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Could not fetch real manifest!');
+        throw new Error("Could not fetch real manifest!");
       } else {
         return response.json();
       }
@@ -50,55 +33,6 @@
   <h1 slot="header">Settings</h1>
 
   <div class="contents">
-    <h2>Notifications</h2>
-
-    <div class="buttonRow">
-      {#if self["scheduler"] == null}
-        <Button disabled flex="1">Notifications Not Available</Button>
-      {:else if permission === "granted"}
-        <Button disabled flex="1">Notifications Enabled!</Button>
-      {:else}
-        <Button
-          flex="1"
-          onClick={() =>
-            Notification.requestPermission().then((p) => (permission = p))}
-        >
-          Enable Notifications
-        </Button>
-      {/if}
-      <Button
-        disabled={permission !== "granted" || self["scheduler"] == null}
-        flex="1"
-        onClick={() =>
-          sendMessageToServiceWorker({ subject: "test-notification" })}
-      >
-        Test notifications
-      </Button>
-    </div>
-
-    <div>
-      <h3>Next Notification</h3>
-      {#await nextNotification}
-        Loading...
-      {:then notification}
-        {#if notification != null}
-          {notification.toLocaleString()}
-        {:else}
-          No notification set.
-        {/if}
-      {/await}
-    </div>
-
-    <div>
-      {#each userSettings.checkInTimes as checkInTime}
-        <div>
-          {String(checkInTime.h).padStart(2, "0")}:{String(
-            checkInTime.m
-          ).padStart(2, "0")}
-        </div>
-      {/each}
-    </div>
-
     <h2>Advanced</h2>
 
     {#await checksumPromise}
