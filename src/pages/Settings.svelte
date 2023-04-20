@@ -1,10 +1,16 @@
 <script lang="ts">
   import Button from "../components/Button.svelte";
+  import Checkbox from "../components/Checkbox.svelte";
   import Page from "../components/Page.svelte";
-  import { transitionTo } from "../navigation";
-  import { getSWRegistration } from "../serviceWorker/clientSide";
-  import { UserSettings, userSettingsWatcher } from "../storage/userSettings";
+  import {
+    UserSettings,
+    setUserSettings,
+    userSettingsWatcher,
+  } from "../storage/userSettings";
   import { clearAllCaches } from "../storage/cache";
+  import { getSWRegistration } from "../serviceWorker/clientSide";
+  import { prefersDarkMode } from "../theme";
+  import { transitionTo } from "../navigation";
 
   const forceUpdate = async () => {
     await clearAllCaches();
@@ -17,6 +23,12 @@
   userSettingsWatcher.subscribe((value) => {
     userSettings = value;
   });
+
+  const setPrefersDarkMode = (preferDarkMode: boolean): void => {
+    setUserSettings(
+      Object.assign({}, userSettings, { preferDarkMode: preferDarkMode })
+    );
+  };
 
   const checksumPromise = fetch("/real_manifest.json")
     .then((response) => {
@@ -33,6 +45,19 @@
   <h1 slot="header">Settings</h1>
 
   <div class="contents">
+    <h2>Theme</h2>
+    <div
+      class="checkOption"
+      on:click={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
+      on:keypress={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
+    >
+      <Checkbox
+        value={prefersDarkMode(userSettings)}
+        onClick={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
+      />
+      Dark Mode
+    </div>
+
     <h2>Advanced</h2>
 
     {#await checksumPromise}
@@ -66,6 +91,14 @@
     flex-direction: row;
     gap: var(--padding-med);
     width: 100%;
+  }
+  .checkOption {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-med);
+    justify-content: start;
   }
   .footer {
     padding-top: var(--padding-med);
