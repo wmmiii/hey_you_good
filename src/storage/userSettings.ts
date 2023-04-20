@@ -14,6 +14,7 @@ type Prompt = TextPrompt;
 export interface UserSettings {
   dailyPrompts: Prompt[];
   dismissedInfo: string[];
+  preferDarkMode?: boolean;
 }
 
 export function getUserSettings(): UserSettings | null {

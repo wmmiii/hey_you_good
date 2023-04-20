@@ -3,8 +3,10 @@ import App from "./App.svelte";
 import { initStorage } from './storage/localDb';
 import { getUserSettings, setUserSettings, UserSettings } from "./storage/userSettings";
 import { getSWRegistration } from "./serviceWorker/clientSide";
+import { initTheme } from "./theme";
 
 initStorage();
+initTheme();
 
 // Initialize the service worker.
 getSWRegistration()

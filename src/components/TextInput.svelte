@@ -18,6 +18,7 @@
     border-radius: var(--border-radius);
     border: var(--input-border);
     box-sizing: border-box;
+    color: var(--text-color);
     font-size: var(--font-size-med);
     outline: none;
     padding: var(--padding-small);
