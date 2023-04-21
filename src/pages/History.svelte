@@ -105,11 +105,11 @@
     list-style: none;
   }
   .feeling {
-    padding: var(--padding-small);
     border-radius: 22px;
-    width: fit-content;
+    color: #ffffff;
     font-weight: bold;
-    background-color: #ffffff;
+    padding: var(--padding-small);
+    width: fit-content;
   }
   .footer {
     display: flex;
