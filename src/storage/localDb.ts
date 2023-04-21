@@ -34,7 +34,7 @@ async function getObjectStore(name: string): Promise<IDBObjectStore> {
   return db.transaction(name, 'readwrite').objectStore(name);
 }
 
-interface Feeling {
+export interface Feeling {
   ts: Date;
   model: 'gloria';
   path: string[];
@@ -64,7 +64,7 @@ export async function getFeelings(from: Date, to: Date): Promise<Feeling[]> {
   })
 }
 
-interface LogEntry {
+export interface LogEntry {
   ts: Date;
   entries: { [prompt: string]: string };
 }
