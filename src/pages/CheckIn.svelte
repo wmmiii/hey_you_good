@@ -119,6 +119,7 @@
     color: #ffffff;
     cursor: pointer;
     font-size: var(--font-size-med);
+    font-weight: bold;
     margin: var(--padding-small) 0;
     padding: var(--padding-med);
     user-select: none;

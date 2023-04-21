@@ -6,6 +6,7 @@
   export let value = false;
   export let onClick: () => any = () => {};
   export let disabled = false;
+  export let size = '24';
 </script>
 
 <span
@@ -14,7 +15,7 @@
   on:keydown={() => (disabled ? null : onClick())}>
   <Icon
     color="currentColor"
-    size="24"
+    size={size}
     src={value ? BiCheckboxChecked : BiCheckbox}
     viewBox="0 0 24 24"
   />
