@@ -52,6 +52,7 @@
       on:keypress={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
     >
       <Checkbox
+        size="32"
         value={prefersDarkMode(userSettings)}
         onClick={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
       />
@@ -97,8 +98,10 @@
     cursor: pointer;
     display: flex;
     flex-direction: row;
+    font-size: var(--font-size-large);
     gap: var(--padding-med);
     justify-content: start;
+    user-select: none;
   }
   .footer {
     padding-top: var(--padding-med);

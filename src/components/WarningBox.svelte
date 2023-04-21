@@ -36,7 +36,7 @@
     align-items: center;
     border-radius: var(--border-radius);
     border: 2px solid var(--col-warning);
-    color: var(--col-warning);
+    color: var(--col-text);
     display: flex;
     flex-direction: row;
     gap: var(--padding-med);

@@ -30,13 +30,17 @@ body {
 body.dark {
   --bg: #000000;
   --border: rgba(255, 255, 255, 0.2);
-  --button-bg: #668bcc;
-  --button-color: #000000;
-  --col-success: #3fcc5e;
-  --col-warning: #da4565;
+  --button-bg: #0f5add;
+  --button-color: #ffffff;
+  --col-success: #76ff94;
+  --col-warning: #ff4f75;
   --input-bg: #222222;
   --input-border-focus: 2px solid #3e3e3e;
   --text-color: #ffffff;
+}
+
+a {
+  color: var(--button-bg);
 }
 
 @media (max-width: 600px) {
