@@ -19,6 +19,7 @@ body {
   --input-bg: #ffffff;
   --input-border-focus: 2px solid #a7a7a7;
   --input-border: 2px solid transparent;
+  --padding-large: 20px;
   --padding-med: 16px;
   --padding-small: 12px;
   --text-color: #000000;
@@ -50,8 +51,9 @@ a {
     --font-size-med: 16px;
     --input-border-focus: 1px solid #a7a7a7;
     --input-border: 1px solid transparent;
-    --padding-med: 8px;
-    --padding-small: 6px;
+    --padding-large: 14px;
+    --padding-med: 12px;
+    --padding-small: 10px;
   }
 }
 

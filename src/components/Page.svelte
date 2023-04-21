@@ -31,14 +31,14 @@
 
 <style>
   .container {
-    bottom: 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: var(--padding-med);
+    height: 100vh;
     justify-content: space-between;
     left: 0;
-    padding: var(--padding-med);
+    padding: var(--padding-large);
     position: absolute;
     top: 0;
     width: 100%;
