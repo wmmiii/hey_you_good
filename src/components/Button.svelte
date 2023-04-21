@@ -1,9 +1,9 @@
 <script lang="ts">
   export let onClick: () => any = () => {};
-  export let background = 'var(--button-bg)';
+  export let background = "var(--button-bg)";
   export let disabled = false;
   export let tabIndex = 0;
-  export let flex = '0';
+  export let flex = "0";
 </script>
 
 <button
@@ -15,9 +15,9 @@
   on:click={() => (disabled ? null : onClick())}
 >
   {#if $$slots.icon}
-  <div class="icon">
-    <slot name="icon" />
-  </div>
+    <div class="icon">
+      <slot name="icon" />
+    </div>
   {/if}
   <slot />
 </button>
@@ -55,7 +55,10 @@
   }
 
   .icon {
+    align-items: center;
+    display: flex;
     height: 1em;
+    justify-content: center;
     width: 1em;
   }
 </style>
