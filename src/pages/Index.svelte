@@ -101,6 +101,7 @@
   :global(.index-content) {
     display: flex;
     flex-direction: column;
+    gap: var(--padding-med);
     justify-content: space-around;
   }
 

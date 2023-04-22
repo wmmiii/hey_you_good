@@ -1,3 +1,4 @@
+import { getUserSettings } from "./userSettings";
 
 const dbName = 'heyYouGoodData';
 const feelingsOS = 'feelings';
@@ -41,6 +42,9 @@ export interface Feeling {
 };
 
 export async function recordFeeling(ts: Date, path: string[]): Promise<void> {
+  if (!getUserSettings()?.recordData) {
+    return;
+  }
   const os = await getObjectStore(feelingsOS);
   os.add({ ts, model: 'gloria', path } as Feeling);
 }
@@ -70,6 +74,9 @@ export interface LogEntry {
 }
 
 export async function recordLogEntries(ts: Date, entries: LogEntry['entries']): Promise<void> {
+  if (!getUserSettings()?.recordData) {
+    return;
+  }
   const os = await getObjectStore(logEntriesOS);
   os.add({ ts, entries });
 }

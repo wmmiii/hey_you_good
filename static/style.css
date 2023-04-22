@@ -22,8 +22,6 @@ body {
   --padding-large: 20px;
   --padding-med: 16px;
   --padding-small: 12px;
-  --switch-bg-active: #ffffff;
-  --switch-bg: #c0c0c0;
   --text-color: #000000;
 
   background-color: var(--bg);
@@ -39,8 +37,6 @@ body.dark {
   --col-warning: #ff4f75;
   --input-bg: #222222;
   --input-border-focus: 2px solid #3e3e3e;
-  --switch-bg-active: #aaaaaa;
-  --switch-bg: #222222;
   --text-color: #ffffff;
 }
 
