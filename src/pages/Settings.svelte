@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "../components/Button.svelte";
-  import Checkbox from "../components/Checkbox.svelte";
+  import Switch from "../components/Switch.svelte";
   import Page from "../components/Page.svelte";
   import {
     UserSettings,
@@ -51,10 +51,9 @@
       on:click={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
       on:keypress={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
     >
-      <Checkbox
-        size="32"
+      <Switch
         value={prefersDarkMode(userSettings)}
-        onClick={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
+        onClick={(value) => setPrefersDarkMode(!value)}
       />
       Dark Mode
     </div>
