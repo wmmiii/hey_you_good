@@ -30,6 +30,12 @@
     );
   };
 
+  const setRecord = (record: boolean): void => {
+    setUserSettings(
+      Object.assign({}, userSettings, { recordData: record })
+    );
+  };
+
   const checksumPromise = fetch("/real_manifest.json")
     .then((response) => {
       if (!response.ok) {
@@ -46,17 +52,23 @@
 
   <div class="contents">
     <h2>Theme</h2>
-    <div
-      class="checkOption"
-      on:click={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
-      on:keypress={() => setPrefersDarkMode(!prefersDarkMode(userSettings))}
+    <Switch
+      value={prefersDarkMode(userSettings)}
+      onClick={(value) => setPrefersDarkMode(value)}
     >
-      <Switch
-        value={prefersDarkMode(userSettings)}
-        onClick={(value) => setPrefersDarkMode(!value)}
-      />
       Dark Mode
-    </div>
+    </Switch>
+    <h2>Recording Data</h2>
+    <p>
+      Sometimes you want to show your friends around the app without actually
+      messing up your data.
+    </p>
+    <Switch
+      value={userSettings.recordData}
+      onClick={(value) => setRecord(value)}
+    >
+      Record Data
+    </Switch>
 
     <h2>Advanced</h2>
 
@@ -91,16 +103,6 @@
     flex-direction: row;
     gap: var(--padding-med);
     width: 100%;
-  }
-  .checkOption {
-    align-items: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    font-size: var(--font-size-large);
-    gap: var(--padding-med);
-    justify-content: start;
-    user-select: none;
   }
   .footer {
     padding-top: var(--padding-med);

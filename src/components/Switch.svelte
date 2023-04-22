@@ -5,56 +5,78 @@
 </script>
 
 <div
-  class="switch"
-  class:on={value}
-  class:disabled
+  class="container"
   on:click={() => (disabled ? null : onClick(!value))}
   on:keydown={() => (disabled ? null : onClick(!value))}
 >
-  <div class="background" />
-  <div class="slide" />
+  <slot name="before" />
+  <span class="switch" class:on={value} class:disabled>
+    <div class="background" />
+    <div class="slide" />
+  </span>
+  <slot />
 </div>
 
 <style>
-  .switch {
-    background-color: var(--switch-bg);
-    border-radius: 24px;
+  .container {
     cursor: pointer;
-    height: 48px;
+    display: flex;
+    flex-direction: row;
+    font-size: var(--font-size-large);
+    gap: var(--padding-large);
+    align-items: center;
+    width: fit-content;
+  }
+  .switch {
+    border-radius: 18px;
+    display: inline-block;
+    height: 36px;
     overflow: hidden;
     position: relative;
     width: 72px;
   }
+  .switch::after {
+    background-color: var(--button-bg);
+    bottom: 0;
+    content: "";
+    filter: contrast(0.6) grayscale(1) !important;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
 
   .background {
-    position: absolute;
-    left: 0;
-    top: 0;
+    background-color: var(--button-bg);
     bottom: 0;
-    background-color: var(--switch-bg-active);
-    width: 24px;
-    transition: width 200ms ease;
+    /* filter: contrast(0.6) brightness(0.5) !important; */
+    left: 0;
     pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: width 200ms ease;
+    width: 18px;
   }
 
   .on .background {
-    width: 48px;
+    width: 54px;
   }
 
   .slide {
-    background-color: var(--button-bg);
-    border-radius: 24px;
-    bottom: 0;
-    left: 0;
+    background-color: var(--button-color);
+    border-radius: 16px;
+    bottom: 2px;
+    left: 2px;
     pointer-events: none;
     position: absolute;
-    top: 0;
+    top: 2px;
     transition: left 200ms ease;
-    width: 48px;
+    width: 32px;
   }
 
   .on .slide {
-    left: 24px;
+    left: 38px;
   }
 
   .disabled {

@@ -18,6 +18,7 @@ getSWRegistration()
         { type: 'text', prompt: 'What are you looking forward to tomorrow?' },
       ],
       dismissedInfo: [],
+      recordData: true,
     };
 
     setUserSettings(Object.assign({}, defaultSettings, getUserSettings()));
