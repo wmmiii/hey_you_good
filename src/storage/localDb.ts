@@ -20,8 +20,8 @@ export function initStorage(): Promise<void> {
       if (!db.objectStoreNames.contains(feelingsOS)) {
         db.createObjectStore(feelingsOS, { keyPath: 'ts' });
       }
-      if (!db.objectStoreNames.contains(logEntriesOS)) {
-        db.createObjectStore(logEntriesOS, { keyPath: 'ts' });
+      if (db.objectStoreNames.contains(logEntriesOS)) {
+        db.deleteObjectStore(logEntriesOS);
       }
     };
   });
