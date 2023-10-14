@@ -38,11 +38,12 @@ export interface Feeling {
   ts: Date;
   model: 'gloria';
   path: string[];
+  notes?: string;
 };
 
-export async function recordFeeling(ts: Date, path: string[]): Promise<void> {
+export async function recordFeeling(ts: Date, path: string[], notes?: string): Promise<void> {
   const os = await getObjectStore(feelingsOS);
-  os.add({ ts, model: 'gloria', path } as Feeling);
+  os.add({ ts, model: 'gloria', path, notes } as Feeling);
 }
 
 export async function getFeelings(from: Date, to: Date): Promise<Feeling[]> {
