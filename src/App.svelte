@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CheckIn from "./pages/CheckIn.svelte";
-	import DailyLog from "./pages/DailyLog.svelte";
 	import History from "./pages/History.svelte";
 	import Index from "./pages/Index.svelte";
 	import Settings from "./pages/Settings.svelte";
@@ -17,8 +16,6 @@
 		<Index />
 	{:else if page === "check-in"}
 		<CheckIn />
-	{:else if page === "daily-log"}
-		<DailyLog />
 	{:else if page === "history"}
 		<History />
 	{:else if page === "settings"}

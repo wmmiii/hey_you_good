@@ -71,15 +71,6 @@
     />
     Check-In
   </Button>
-  <Button onClick={() => transitionTo("daily-log", "slide-left")}>
-    <Icon
-      slot="icon"
-      src={BiCalendar}
-      color="currentColor"
-      viewBox="0 0 24 24"
-    />
-    Daily Log
-  </Button>
   <Button onClick={() => transitionTo("history", "slide-left")}>
     <Icon
       slot="icon"
