@@ -100,7 +100,7 @@ func main() {
 	tarWriter.WriteHeader(&tar.Header{
 		Name:       "file_manifest.json",
 		Size:       int64(len(manifestBytes)),
-		Mode:       0x0444,
+		Mode:       0x0777,
 		ModTime:    time.Unix(0, 0),
 		AccessTime: time.Unix(0, 0),
 		ChangeTime: time.Unix(0, 0),
