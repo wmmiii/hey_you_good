@@ -13,7 +13,7 @@ ts_config(
 pkg_tar(
     name = "static_tar",
     srcs = [
-        "//src:bundle",
+        "//src:new_bundle",
         "//src:service_worker",
         "//static",
     ],
