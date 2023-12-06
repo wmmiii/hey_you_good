@@ -45,7 +45,11 @@ ts_project(
             "**/*.tsx",
         ],
     ),
+    allow_js = True,
     declaration = True,
+    declaration_map = True,
+    preserve_jsx = True,
+    source_map = True,
     transpiler = "tsc",
     tsconfig = "//:tsconfig",
     deps = [
