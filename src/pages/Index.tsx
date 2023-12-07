@@ -1,13 +1,16 @@
-import React from 'react';
+import Button from '../components/Button';
+import IconBxCog from '../icons/IconBxCog';
 import Page from '../components/Page';
-import { useContext } from 'react';
-import { UserSettingsContext } from '../contexts/UserSettingsContext';
-import { useCallback } from 'react';
+import React from 'react';
 import WarningBox from '../components/WarningBox';
 import styles from './Index.module.scss';
-import Button from '../components/Button';
+import { UserSettingsContext } from '../contexts/UserSettingsContext';
+import { useCallback } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router';
-import IconBxCog from '../icons/IconBxCog';
+import LastWeek from '../components/LastWeek';
+import IconBxCheckDouble from '../icons/IconBxCheckDouble';
+import IconBxHistory from '../icons/IconBxHistory';
 
 const PWA_WARNING_KEY = "pwa-warning";
 
@@ -33,11 +36,11 @@ export default function Index(): JSX.Element {
       header={
         <div className={styles.header}>
           <div style={{ flex: 1 }}></div>
-          <Button onClick={() => navigate("/settings")} icon={<IconBxCog />}/>
-      </div>
+          <Button onClick={() => navigate("/settings")} icon={<IconBxCog />} />
+        </div>
       }>
       {
-        userSettings?.dismissedInfo.indexOf(PWA_WARNING_KEY) === -1 &&
+        !IS_PWA && userSettings?.dismissedInfo.indexOf(PWA_WARNING_KEY) === -1 &&
         <WarningBox onCloseClicked={closePwaWarning}>
           <p>
             This app is designed to be installed by Google Chrome as a Progressive
@@ -54,6 +57,20 @@ export default function Index(): JSX.Element {
           </p>
         </WarningBox>
       }
+
+      <LastWeek />
+
+      <Button
+        onClick={() => navigate("/checkin")}
+        icon={<IconBxCheckDouble fontSize={24} />}>
+        Check-In
+      </Button>
+
+      <Button
+        onClick={() => navigate("/history")}
+        icon={<IconBxHistory fontSize={24} />}>
+        History
+      </Button>
     </Page>
   );
 }

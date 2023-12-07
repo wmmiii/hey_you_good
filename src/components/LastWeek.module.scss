@@ -1,0 +1,24 @@
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+}
+
+.week>div {
+  align-items: center;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  min-height: 24px;
+  min-width: 24px;
+  padding: var(--padding-small);
+}
+
+.week>div:nth-child(7n) {
+  border-right: none;
+}
+
+.week>div:nth-child(n + 8) {
+  border-bottom: none;
+}
