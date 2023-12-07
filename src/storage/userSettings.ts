@@ -1,8 +1,4 @@
-import { writable } from "svelte/store";
-
-const userSettingsKey = 'user-settings';
-
-export const userSettingsWatcher = writable(getUserSettings());
+const USER_SETTINGS_KEY = 'user-settings';
 
 interface TextPrompt {
   type: 'text',
@@ -19,7 +15,7 @@ export interface UserSettings {
 }
 
 export function getUserSettings(): UserSettings | null {
-  const settingsString = localStorage.getItem(userSettingsKey);
+  const settingsString = localStorage.getItem(USER_SETTINGS_KEY);
   if (settingsString == null) {
     return null;
   }
@@ -27,6 +23,5 @@ export function getUserSettings(): UserSettings | null {
 }
 
 export async function setUserSettings(settings: UserSettings): Promise<void> {
-  localStorage.setItem(userSettingsKey, JSON.stringify(settings));
-  userSettingsWatcher.set(settings);
+  localStorage.setItem(USER_SETTINGS_KEY, JSON.stringify(settings));
 }

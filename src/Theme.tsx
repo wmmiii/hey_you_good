@@ -1,7 +1,11 @@
-import { UserSettings, userSettingsWatcher } from "./storage/userSettings";
+import React, { useContext, useEffect } from "react";
+import { UserSettings } from "./storage/userSettings";
+import { UserSettingsContext } from "./contexts/UserSettingsContext";
 
-export function initTheme() {
-  userSettingsWatcher.subscribe((userSettings) => {
+export function Theme(): JSX.Element {
+  const { userSettings } = useContext(UserSettingsContext);
+
+  useEffect(() => {
     if (prefersDarkMode(userSettings)) {
       document.body.classList.add('dark');
       document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000000');
@@ -9,10 +13,14 @@ export function initTheme() {
       document.body.classList.remove('dark');
       document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#FFC961');
     }
-  });
+  }, [userSettings]);
+
+  return (
+    <></>
+  );
 }
 
-export function prefersDarkMode(userSettings: UserSettings | null): boolean {
+function prefersDarkMode(userSettings: UserSettings | null): boolean {
   return userSettings?.preferDarkMode != null ?
     userSettings.preferDarkMode :
     (window.matchMedia &&
