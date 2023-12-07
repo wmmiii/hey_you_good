@@ -1,16 +1,17 @@
 {
   "private": true,
   "dependencies": {
-    "@types/react": "^18.2.39",
-    "@types/react-dom": "^18.2.17",
-    "esbuild-react": "^0.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router": "6.20.0",
+    "react-router-dom": "6.20.0",
     "svelte": "3.55.1",
     "svelte-icons-pack": "2.0.0"
   },
   "devDependencies": {
+    "@types/react": "18.2.39",
+    "@types/react-dom": "18.2.17",
+    "@types/react-router-dom": "5.3.3",
     "esbuild": "0.9.6",
     "esbuild-svelte": "0.7.3",
     "svelte-preprocess": "5.0.1",

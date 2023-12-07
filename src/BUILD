@@ -27,13 +27,14 @@ esbuild(
         "**/*.tsx",
     ]),
     entry_point = "new_main.tsx",
-    minify = True,
+    minify = False,
     visibility = ["//:__pkg__"],
     deps = [
-        "//:node_modules/esbuild-react",
         "//:node_modules/react",
         "//:node_modules/react-dom",
         "//:node_modules/react-router",
+        "//:node_modules/react-router-dom",
+        "//:node_modules/svelte",
     ],
 )
 
