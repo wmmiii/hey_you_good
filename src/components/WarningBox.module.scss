@@ -1,0 +1,32 @@
+.warning-box {
+  align-items: center;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--col-warning);
+  color: var(--col-text);
+  display: flex;
+  flex-direction: row;
+  gap: var(--padding-med);
+  justify-content: center;
+  padding: var(--padding-med);
+  position: relative;
+}
+
+.warning-box::after {
+  background-color: var(--col-warning);
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: 0.1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+:global(.warning-box-icon) {
+  flex-shrink: 0;
+}
+
+.contents {
+  flex: 1;
+}

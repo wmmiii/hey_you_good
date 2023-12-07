@@ -5,10 +5,8 @@ import { createRoot } from 'react-dom/client';
 import { getSWRegistration } from './serviceWorker/clientSide';
 import { getUserSettings, setUserSettings, UserSettings } from './storage/userSettings';
 import { initStorage } from './storage/localDb';
-import { initTheme } from './theme';
 
 initStorage();
-initTheme();
 
 // Initialize the service worker.
 getSWRegistration()
