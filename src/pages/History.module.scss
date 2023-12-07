@@ -1,0 +1,22 @@
+.container>ol {
+  list-style: none;
+}
+
+.feeling {
+  border-radius: 22px;
+  color: #ffffff;
+  font-weight: bold;
+  padding: var(--padding-small);
+  width: fit-content;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--padding-med);
+  padding-top: var(--padding-med);
+}
+
+.footer :global(button) {
+  width: 50%;
+}
