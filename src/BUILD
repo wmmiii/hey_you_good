@@ -34,6 +34,7 @@ esbuild(
         "//:node_modules/react-dom",
         "//:node_modules/react-router",
         "//:node_modules/react-router-dom",
+        "//:node_modules/svelte",
     ],
 )
 
