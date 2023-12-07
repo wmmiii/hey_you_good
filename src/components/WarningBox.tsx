@@ -1,8 +1,8 @@
-import React from 'react';
-import styles from './WarningBox.module.scss';
 import Button from './Button';
 import IconBxError from '../icons/IconBxError';
 import IconBxX from '../icons/IconBxX';
+import React from 'react';
+import styles from './WarningBox.module.scss';
 
 interface WarningBoxProps {
   onCloseClicked: () => void;

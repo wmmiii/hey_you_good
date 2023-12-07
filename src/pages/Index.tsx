@@ -1,16 +1,14 @@
 import Button from '../components/Button';
+import IconBxCheckDouble from '../icons/IconBxCheckDouble';
 import IconBxCog from '../icons/IconBxCog';
+import IconBxHistory from '../icons/IconBxHistory';
+import LastWeek from '../components/LastWeek';
 import Page from '../components/Page';
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import WarningBox from '../components/WarningBox';
 import styles from './Index.module.scss';
 import { UserSettingsContext } from '../contexts/UserSettingsContext';
-import { useCallback } from 'react';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router';
-import LastWeek from '../components/LastWeek';
-import IconBxCheckDouble from '../icons/IconBxCheckDouble';
-import IconBxHistory from '../icons/IconBxHistory';
 
 const PWA_WARNING_KEY = "pwa-warning";
 
@@ -38,6 +36,9 @@ export default function Index(): JSX.Element {
           <div style={{ flex: 1 }}></div>
           <Button onClick={() => navigate("/settings")} icon={<IconBxCog />} />
         </div>
+      }
+      footer={
+        <div className={styles.footer}>Build version %BUILD_CHECKSUM%</div>
       }>
       {
         !IS_PWA && userSettings?.dismissedInfo.indexOf(PWA_WARNING_KEY) === -1 &&

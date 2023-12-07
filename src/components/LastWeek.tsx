@@ -1,7 +1,7 @@
+import IconBxCheckCircle from '../icons/IconBxCheckCircle';
 import React, { useEffect, useState } from 'react';
 import styles from './LastWeek.module.scss';
 import { getFeelings } from '../storage/localDb';
-import IconBxCheckCircle from '../icons/IconBxCheckCircle';
 
 interface DayProgress {
   date: Date;
