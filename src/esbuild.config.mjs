@@ -1,11 +1,9 @@
-import esbuildSvelte from "esbuild-svelte";
-import sveltePreprocess from "svelte-preprocess";
+import {ScssModulesPlugin} from "esbuild-scss-modules-plugin";
 
 export default {
-  plugins: [esbuildSvelte({
-    compilerOptions: {
-      css: 'injected',
-    },
-    preprocess: sveltePreprocess(),
-  })],
+  plugins: [
+    ScssModulesPlugin({
+      inject: true,
+    }),
+  ],
 }
