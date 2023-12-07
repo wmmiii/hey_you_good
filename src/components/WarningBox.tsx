@@ -15,7 +15,6 @@ export default function WarningBox(props: WarningBoxProps): JSX.Element {
       <IconBxError
         className={styles.warningBoxIcon}
         color="var(--col-warning)"
-        viewBox="0 0 24 24"
         fontSize={36} />
 
       <div className={styles.contents}>
@@ -24,11 +23,7 @@ export default function WarningBox(props: WarningBoxProps): JSX.Element {
 
       <Button
         onClick={props.onCloseClicked}
-        icon={<IconBxX
-          color="currentColor"
-          viewBox="0 0 24 24"
-          fontSize="24"
-        />} />
+        icon={<IconBxX fontSize="24" />} />
     </div>
   );
 }
