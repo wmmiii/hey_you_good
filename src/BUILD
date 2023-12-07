@@ -23,13 +23,16 @@ esbuild(
 esbuild(
     name = "new_bundle",
     srcs = glob([
+        "**/*.scss",
         "**/*.ts",
         "**/*.tsx",
     ]),
+    config = "esbuild.config.mjs",
     entry_point = "new_main.tsx",
     minify = False,
     visibility = ["//:__pkg__"],
     deps = [
+        "//:node_modules/esbuild-scss-modules-plugin",
         "//:node_modules/react",
         "//:node_modules/react-dom",
         "//:node_modules/react-router",
