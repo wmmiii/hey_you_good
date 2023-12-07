@@ -1,10 +1,11 @@
-import "./browserHistory";
-import {App} from "./App";
+import React from 'react'
+import './browserHistory';
+import { App } from './App';
+import { createRoot } from 'react-dom/client';
+import { getSWRegistration } from './serviceWorker/clientSide';
+import { getUserSettings, setUserSettings, UserSettings } from './storage/userSettings';
 import { initStorage } from './storage/localDb';
-import { getUserSettings, setUserSettings, UserSettings } from "./storage/userSettings";
-import { getSWRegistration } from "./serviceWorker/clientSide";
-import { initTheme } from "./theme";
-import * as ReactDOM from 'react-dom';
+import { initTheme } from './theme';
 
 initStorage();
 initTheme();
@@ -25,6 +26,5 @@ getSWRegistration()
     setUserSettings(Object.assign({}, defaultSettings, getUserSettings()));
   });
 
-console.log('FOO');
-
-ReactDOM.render(App(), document.getElementById("app"));
+const root = createRoot(document.getElementById('app')!);
+root.render(<App />);

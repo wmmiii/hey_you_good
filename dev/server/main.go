@@ -84,15 +84,19 @@ func main() {
 }
 
 type rootHandler struct {
-	index string
-	fs    http.Handler
+	handler http.Handler
+	index   string
+	rootDir http.Dir
 }
 
 func (h *rootHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		w.Write([]byte(h.index))
+	} else if _, err := h.rootDir.Open(r.URL.Path); err != nil {
+		w.WriteHeader(404)
+		w.Write([]byte(h.index))
 	} else {
-		h.fs.ServeHTTP(w, r)
+		h.handler.ServeHTTP(w, r)
 	}
 }
 
@@ -110,9 +114,11 @@ func newRootHandler(temp string) (http.Handler, error) {
 			fmt.Sprintf("<script src=\"%s\"></script>", reloadScript))
 	}
 
-	fs := http.FileServer(http.Dir(temp))
+	dir := http.Dir(temp)
+	fs := http.FileServer(dir)
 	return &rootHandler{
-		index: index,
-		fs:    fs,
+		handler: fs,
+		index:   index,
+		rootDir: dir,
 	}, nil
 }
