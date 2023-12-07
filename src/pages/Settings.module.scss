@@ -1,0 +1,16 @@
+.contents {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-small);
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--padding-med);
+  width: 100%;
+}
+
+.footer {
+  padding-top: var(--padding-med);
+}
