@@ -2,33 +2,15 @@ load("@aspect_rules_esbuild//esbuild:defs.bzl", "esbuild")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
-# esbuild(
-#     name = "bundle",
-#     srcs =
-#         glob([
-#             "**/*.ts",
-#             "**/*.svelte",
-#         ]) + [
-#             "//:node_modules/esbuild-svelte",
-#             "//:node_modules/svelte",
-#             "//:node_modules/svelte-icons-pack",
-#             "//:node_modules/svelte-preprocess",
-#         ],
-#     config = "esbuild.config.mjs",
-#     entry_point = "main.ts",
-#     minify = True,
-#     visibility = ["//:__pkg__"],
-# )
-
 esbuild(
-    name = "new_bundle",
+    name = "bundle",
     srcs = glob([
         "**/*.scss",
         "**/*.ts",
         "**/*.tsx",
     ]),
     config = "esbuild.config.mjs",
-    entry_point = "new_main.tsx",
+    entry_point = "main.tsx",
     minify = False,
     visibility = ["//:__pkg__"],
     deps = [
@@ -37,7 +19,6 @@ esbuild(
         "//:node_modules/react-dom",
         "//:node_modules/react-router",
         "//:node_modules/react-router-dom",
-        "//:node_modules/svelte",
     ],
 )
 

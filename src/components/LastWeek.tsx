@@ -28,14 +28,14 @@ export default function LastWeek(): JSX.Element {
       <div className={styles.week}>
         {
           days.map(d => (
-            <div>
+            <div key={'head-' + d.date.toDateString()}>
               {d.date.toLocaleDateString('default', { weekday: "short" })}
             </div>
           ))
         }
         {
           days.map(d => (
-            <div>
+            <div key={'body-' + d.date.toDateString()}>
               {
                 d.checkIn &&
                 <IconBxCheckCircle
