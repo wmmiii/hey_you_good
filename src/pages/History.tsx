@@ -15,7 +15,7 @@ export default function History(): JSX.Element {
     const yearAgo = new Date(now);
     yearAgo.setFullYear(yearAgo.getFullYear() - 1);
 
-    getFeelings(now, yearAgo).then(setFeelings);
+    getFeelings(yearAgo, now).then(setFeelings);
   });
 
   const days = useMemo((): Day[] => {
@@ -62,8 +62,8 @@ export default function History(): JSX.Element {
           <span>Loading...</span> :
           <ol>
             {
-              days.map((d, i) => (
-                <li key={i}>
+              days.map(d => (
+                <li key={d.date.toDateString()}>
                   <h3>{d.date.toLocaleDateString()}</h3>
                   <ul>
                     {
