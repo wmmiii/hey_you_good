@@ -7,13 +7,13 @@ body {
 }
 
 body {
-  --bg: #FFEDD2;
+  --bg: #dcdcdc;
   --border-radius: 4px;
   --border: rgba(0, 0, 0, 0.2);
-  --button-bg: #284a85;
+  --button-bg: #7a9686;
   --button-color: #ffffff;
-  --col-success: #006716;
-  --col-warning: #730019;
+  --col-success: #0087a6;
+  --col-warning: #c6a481;
   --font-size-large: 24px;
   --font-size-med: 18px;
   --input-bg: #ffffff;
@@ -29,12 +29,12 @@ body {
 }
 
 body.dark {
-  --bg: #000000;
+  --bg: #1c181d;
   --border: rgba(255, 255, 255, 0.2);
-  --button-bg: #0f5add;
-  --button-color: #ffffff;
-  --col-success: #76ff94;
-  --col-warning: #ff4f75;
+  --button-bg: #7daf92;
+  --button-color: #1c181d;
+  --col-success: #62e2ff;
+  --col-warning: #ba9065;
   --input-bg: #222222;
   --input-border-focus: 2px solid #3e3e3e;
   --text-color: #ffffff;
