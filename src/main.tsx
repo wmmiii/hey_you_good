@@ -1,5 +1,4 @@
 import React from 'react'
-import './browserHistory';
 import { App } from './App';
 import { createRoot } from 'react-dom/client';
 import { getSWRegistration } from './serviceWorker/clientSide';
