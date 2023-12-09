@@ -2,12 +2,18 @@ import React from 'react';
 import styles from './Page.module.scss';
 
 interface PageProps {
+  className?: string;
   header?: React.ReactNode;
   footer?: React.ReactNode;
   children: React.ReactNode;
 }
 
 export default function Page(props: PageProps): JSX.Element {
+  const contentClasses = [styles.content];
+  if (props.className) {
+    contentClasses.push(props.className);
+  }
+
   return (
     <div className={styles.container}>
       {
@@ -16,7 +22,7 @@ export default function Page(props: PageProps): JSX.Element {
           {props.header}
         </div>
       }
-      <div className={styles.content}>
+      <div className={contentClasses.join(' ')}>
         {props.children}
       </div>
       {
