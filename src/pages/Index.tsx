@@ -31,6 +31,7 @@ export default function Index(): JSX.Element {
 
   return (
     <Page
+      className={styles.content}
       header={
         <div className={styles.header}>
           <div style={{ flex: 1 }}></div>
