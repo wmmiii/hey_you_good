@@ -9,7 +9,7 @@ export async function clearOldCaches(): Promise<void> {
   const oldCaches = await caches.keys();
 
   const cache = await caches.open(cacheName);
-  const response = await fetch('/real_manifest.json');
+  const response = await fetch('/file_manifest.json');
   const jsonBody = await response.json();
   const files = jsonBody['Files'] as string[];
   await cache.addAll(files.filter(shouldCache));
