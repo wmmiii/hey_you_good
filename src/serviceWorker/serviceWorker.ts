@@ -13,12 +13,8 @@ self.addEventListener('activate', () => {
 });
 
 self.addEventListener('fetch', (event: any) => {
-  if (event.request.method !== 'GET') {
-    return;
-  }
-
-  if (new URL(event.request.url).pathname === '/real_manifest.json') {
-    event.respondWith(fetch(new Request('/file_manifest.json')));
+  if (event.request.method !== 'GET' ||
+    new URL(event.request.url).pathname === '/file_manifest.json') {
     return;
   }
 

@@ -16,7 +16,7 @@ export default function Settings(): JSX.Element {
   const [checksum, setChecksum] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/real_manifest.json')
+    fetch('/file_manifest.json')
       .then(response => {
         if (!response.ok) {
           throw new Error('Could not fetch real manifest!');
