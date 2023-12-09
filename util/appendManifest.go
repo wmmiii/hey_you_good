@@ -71,14 +71,17 @@ func main() {
 		} else if err != nil {
 			log.Fatal(err)
 		}
-		tarWriter.WriteHeader(cur)
-		if cur.Typeflag == tar.TypeReg {
+		if cur.Typeflag != tar.TypeReg {
+			tarWriter.WriteHeader(cur)
+		} else if cur.Typeflag == tar.TypeReg {
 			files = append(files, cur.Name)
 			data, err := io.ReadAll(tarReader)
 			if err != nil {
 				log.Fatal(err)
 			}
 			data = bytes.ReplaceAll(data, []byte(checksumReplace), []byte(checksumString))
+			cur.Size = int64(len(data))
+			tarWriter.WriteHeader(cur)
 			tarWriter.Write(data)
 		}
 	}
