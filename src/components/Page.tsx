@@ -16,7 +16,9 @@ export default function Page(props: PageProps): JSX.Element {
           {props.header}
         </div>
       }
-      {props.children}
+      <div className={styles.content}>
+        {props.children}
+      </div>
       {
         props.footer &&
         <div className={styles.footer}>
