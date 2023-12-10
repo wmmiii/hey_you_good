@@ -2,6 +2,11 @@ import { clearOldCaches, getCachedResponse } from '../storage/cache';
 
 declare const self: any;
 
+const skipCache = [
+  '/file_manifest.json',
+  '/service_worker.js',
+];
+
 self.addEventListener('install', (event: any) => {
   event.waitUntil(clearOldCaches());
 
@@ -13,8 +18,8 @@ self.addEventListener('activate', () => {
 });
 
 self.addEventListener('fetch', (event: any) => {
-  if (event.request.method !== 'GET' ||
-    new URL(event.request.url).pathname === '/file_manifest.json') {
+  const path = new URL(event.request.url).pathname;
+  if (event.request.method !== 'GET' || skipCache.indexOf(path) > -1) {
     return;
   }
 
