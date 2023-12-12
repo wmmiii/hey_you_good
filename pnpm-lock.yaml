@@ -1,6 +1,9 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/gapi': ^0.0.47
+  '@types/gapi.client.drive-v3': ^0.0.4
+  '@types/google.accounts': ^0.0.14
   '@types/react': 18.2.42
   '@types/react-dom': 18.2.17
   '@types/react-router-dom': 5.3.3
@@ -14,6 +17,9 @@ specifiers:
   typescript: 5.3.3
 
 dependencies:
+  '@types/gapi': 0.0.47
+  '@types/gapi.client.drive-v3': 0.0.4
+  '@types/google.accounts': 0.0.14
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router: 6.20.1_react@18.2.0
@@ -228,9 +234,47 @@ packages:
     dev: true
     optional: true
 
+  /@maxim_mazurok/gapi.client.discovery-v1/0.1.20200806:
+    resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
+    dependencies:
+      '@types/gapi.client': 1.0.8
+      '@types/gapi.client.discovery-v1': 0.0.4
+    dev: false
+
+  /@maxim_mazurok/gapi.client.drive-v3/0.0.20231213:
+    resolution: {integrity: sha512-1onCQ5HS0yr8UgiL6Zoaynpdjx/Q0/E2xaxZKn4JUi0loLSLCnjG0TnVYdvqk2EPHbvawn1hF/jCsSVl94jI0g==}
+    dependencies:
+      '@types/gapi.client': 1.0.8
+      '@types/gapi.client.discovery-v1': 0.0.4
+    dev: false
+
   /@remix-run/router/1.13.1:
     resolution: {integrity: sha512-so+DHzZKsoOcoXrILB4rqDkMDy7NLMErRdOxvzvOKb507YINKUP4Di+shbTZDhSE/pBZ+vr7XGIpcOO0VLSA+Q==}
     engines: {node: '>=14.0.0'}
+    dev: false
+
+  /@types/gapi.client.discovery-v1/0.0.4:
+    resolution: {integrity: sha512-uevhRumNE65F5mf2gABLaReOmbFSXONuzFZjNR3dYv6BmkHg+wciubHrfBAsp3554zNo3Dcg6dUAlwMqQfpwjQ==}
+    dependencies:
+      '@maxim_mazurok/gapi.client.discovery-v1': 0.1.20200806
+    dev: false
+
+  /@types/gapi.client.drive-v3/0.0.4:
+    resolution: {integrity: sha512-jE37dJ0EzAdY0aJPFOp20xmec/aO0P4HtUIA9k07RMPyedFDOcuMlSac1r0PklwQdgXF7BHaMoObNHNAnwSQUQ==}
+    dependencies:
+      '@maxim_mazurok/gapi.client.drive-v3': 0.0.20231213
+    dev: false
+
+  /@types/gapi.client/1.0.8:
+    resolution: {integrity: sha512-qJQUmmumbYym3Amax0S8CVzuSngcXsC1fJdwRS2zeW5lM63zXkw4wJFP+bG0jzgi0R6EsJKoHnGNVTDbOyG1ng==}
+    dev: false
+
+  /@types/gapi/0.0.47:
+    resolution: {integrity: sha512-/ZsLuq6BffMgbKMtZyDZ8vwQvTyKhKQ1G2K6VyWCgtHHhfSSXbk4+4JwImZiTjWNXfI2q1ZStAwFFHSkNoTkHA==}
+    dev: false
+
+  /@types/google.accounts/0.0.14:
+    resolution: {integrity: sha512-HqIVkVzpiLWhlajhQQd4rIV7czanFvXblJI2J1fSrL+VKQuQwwZ63m35D/mI0flsqKE6p/hNrAG0Yn4FD6JvNA==}
     dev: false
 
   /@types/history/4.7.11:
