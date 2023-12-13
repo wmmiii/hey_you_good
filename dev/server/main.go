@@ -24,9 +24,13 @@ var (
 
 func main() {
 	var port int
+	var serverCrt string
+	var serverKey string
 
 	// Read input flags
 	flag.IntVar(&port, "port", 8080, "Specify which port to bind the server to.")
+	flag.StringVar(&serverCrt, "server_crt", "server.crt", "Specify the TLS certificate to use for the server.")
+	flag.StringVar(&serverKey, "server_key", "server.key", "Specify the TLS key to use for the server.")
 	flag.Parse()
 
 	// Create temporary directory
@@ -76,8 +80,11 @@ func main() {
 	}
 	http.Handle("/", rootHandler)
 
-	log.Printf("Listening on :%d...", port)
-	err = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	log.Printf("Listening on :%d...\n", port)
+	log.Println("Remember to add the following line into your /etc/hosts:")
+	log.Println("127.0.0.1 dev.heyyougood.app")
+	log.Printf("Hosting at https://dev.heyyougood.app:%d\n", port)
+	err = http.ListenAndServeTLS(fmt.Sprintf(":%d", port), serverCrt, serverKey, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
