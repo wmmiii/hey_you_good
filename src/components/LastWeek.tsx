@@ -8,7 +8,11 @@ interface DayProgress {
   checkIn: boolean;
 }
 
-export default function LastWeek(): JSX.Element {
+interface LastWeekProps {
+  lastUpdate: Date;
+}
+
+export default function LastWeek({lastUpdate}: LastWeekProps): JSX.Element {
   const [days, setDays] = useState(getLastWeek());
 
   useEffect(() => {
@@ -20,38 +24,34 @@ export default function LastWeek(): JSX.Element {
       }
       setDays([...days])
     })();
-  }, []);
+  }, [lastUpdate]);
 
   return (
-    <div>
-      <h2>Over the last week...</h2>
-      <div className={styles.week}>
-        {
-          days.map(d => (
-            <div key={'head-' + d.date.toDateString()}>
-              {d.date.toLocaleDateString('default', { weekday: "short" })}
-            </div>
-          ))
-        }
-        {
-          days.map(d => (
-            <div key={'body-' + d.date.toDateString()}>
-              {
-                d.checkIn &&
-                <IconBxCheckCircle
-                  fontSize={24}
-                  color="var(--col-success)" />
-              }
-            </div>
-          ))
-        }
-      </div>
+    <div className={styles.week}>
+      {
+        days.map(d => (
+          <div key={'head-' + d.date.toDateString()}>
+            {d.date.toLocaleDateString('default', { weekday: "short" })}
+          </div>
+        ))
+      }
+      {
+        days.map(d => (
+          <div key={'body-' + d.date.toDateString()}>
+            {
+              d.checkIn &&
+              <IconBxCheckCircle
+                fontSize={24}
+                color="var(--col-success)" />
+            }
+          </div>
+        ))
+      }
     </div>
   );
 }
 
 function getLastWeek(): DayProgress[] {
-
   const days: DayProgress[] = [];
   const today = new Date();
   today.setHours(0, 0, 0, 0);

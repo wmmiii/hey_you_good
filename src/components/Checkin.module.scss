@@ -1,9 +1,8 @@
-
-.footer {
+.wrapper {
   display: flex;
-  flex-direction: row;
-  gap: var(--padding-med);
-  padding-top: var(--padding-med);
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-start;
 }
 
 .feeling,

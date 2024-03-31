@@ -12,5 +12,7 @@
 }
 
 .footer {
-  padding-top: var(--padding-med);
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-large) 0;
 }

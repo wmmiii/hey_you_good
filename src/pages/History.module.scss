@@ -12,11 +12,6 @@
 
 .footer {
   display: flex;
-  flex-direction: row;
-  gap: var(--padding-med);
-  padding-top: var(--padding-med);
-}
-
-.footer :global(button) {
-  width: 50%;
+  flex-direction: column;
+  padding: var(--padding-large);
 }

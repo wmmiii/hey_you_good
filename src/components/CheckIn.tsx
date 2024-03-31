@@ -1,16 +1,18 @@
-import Button from '../components/Button';
 import IconBxCheck from '../icons/IconBxCheck';
-import Page from '../components/Page';
 import React, { useCallback, useMemo, useState } from 'react';
-import TextInput from '../components/TextInput';
+import TextInput from './TextInput';
 import styles from './Checkin.module.scss';
 import { gloriaList } from '../feelingsModel';
-import { recordFeeling } from '../storage/localDb';
-import { useNavigate } from 'react-router';
 
-export default function CheckIn(): JSX.Element {
-  const history = useNavigate();
-  const [feeling, setFeeling] = useState<string[]>([]);
+interface CheckInProps {
+  feeling: string[];
+  setFeeling: (feeling: string[]) => void;
+}
+
+export default function CheckIn({
+  feeling,
+  setFeeling
+}: CheckInProps): JSX.Element {
   const [searchString, setSearchString] = useState('');
 
   const filteredFeelings = useMemo(
@@ -30,25 +32,7 @@ export default function CheckIn(): JSX.Element {
   }, [feeling, setFeeling, setSearchString]);
 
   return (
-    <Page
-      header={<h1>How are you feeling?</h1>}
-      footer={
-        <div className={styles.footer}>
-          <Button onClick={() => history('/')} flex="1">
-            Back to home
-          </Button>
-          <Button
-            onClick={async () => {
-              await recordFeeling(new Date(), feeling);
-              history('/');
-            }}
-            disabled={feeling.length < 1}
-            flex="1">
-            Save
-          </Button>
-        </div>
-      }>
-
+    <div className={styles.wrapper}>
       <TextInput
         className={styles.searchInput}
         value={searchString}
@@ -77,8 +61,7 @@ export default function CheckIn(): JSX.Element {
           );
         })
       }
-
-    </Page>
+    </div>
   );
 }
 
