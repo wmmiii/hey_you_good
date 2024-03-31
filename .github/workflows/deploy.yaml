@@ -34,7 +34,7 @@ jobs:
           tar -xvf bazel-bin/util/package.tar -C dist
 
       - name: Upload pages
-        uses: actions/upload-pages-artifact@master
+        uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: dist
 
@@ -55,4 +55,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4.0.5
