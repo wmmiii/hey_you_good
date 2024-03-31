@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CheckIn from './pages/CheckIn';
 import History from './pages/History';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
@@ -18,7 +17,6 @@ export function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<Index />} />
-						<Route path="/checkin" element={<CheckIn />} />
 						<Route path="/history" element={<History />} />
 						<Route path="/settings" element={<Settings />} />
 

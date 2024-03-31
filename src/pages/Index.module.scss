@@ -1,16 +1,34 @@
 .header {
+  align-items: center;
   display: flex;
   flex-direction: row;
+  gap: var(--padding-large);
+  padding: var(--padding-large) 0;
+}
+
+.saved {
+  opacity: 0;
+  transition: opacity 1s linear;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.showSaved {
+  opacity: 1;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: var(--padding-med);
-  justify-content: space-around;
 }
 
 .footer {
   font-weight: 300;
   font-size: 12px;
+  padding: var(--padding-large) 0;
+}
+
+.saveButton {
+  width: 100%;
 }

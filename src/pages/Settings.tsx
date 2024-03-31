@@ -37,8 +37,9 @@ export default function Settings(): JSX.Element {
     <Page
       header={<h1>Settings</h1>}
       footer={
-        <div slot="footer" className={`${styles.footer} ${styles.buttonRow}`}>
-          <Button onClick={() => navigate('/')} flex="1">
+        <div className={`${styles.footer} ${styles.buttonRow}`}>
+          <div className={styles.footer}>Build version %BUILD_CHECKSUM%</div>
+          <Button onClick={() => navigate('/')}>
             Done
           </Button>
         </div>

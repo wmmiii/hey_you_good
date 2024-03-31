@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Button.module.scss';
 
 interface ButtonProps {
+  className?: string;
   onClick: () => void;
   icon?: JSX.Element;
   background?: string;
@@ -15,6 +16,9 @@ export default function Button(props: ButtonProps): JSX.Element {
   const classes = [styles.button];
   if (props.children == null && props.icon != null) {
     classes.push(styles.iconOnly);
+  }
+  if (props.className) {
+    classes.push(props.className);
   }
 
   return (

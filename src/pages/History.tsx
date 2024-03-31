@@ -51,11 +51,11 @@ export default function History(): JSX.Element {
   return (
     <Page
       footer={
-        <Button
-          flex="0 auto 0"
-          onClick={() => navigate('/')}>
-          Back
-        </Button>
+        <div className={styles.footer}>
+          <Button onClick={() => navigate('/')}>
+            Back
+          </Button>
+        </div>
       }>
       {
         days == null ?
