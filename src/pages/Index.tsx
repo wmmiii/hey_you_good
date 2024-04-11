@@ -1,15 +1,16 @@
 import Button from '../components/Button';
+import CheckIn from '../components/CheckIn';
 import IconBxCog from '../icons/IconBxCog';
 import IconBxHistory from '../icons/IconBxHistory';
 import LastWeek from '../components/LastWeek';
 import Page from '../components/Page';
 import React, { createRef, useCallback, useContext, useEffect, useState } from 'react';
+import TagFeeling from '../components/TagFeeling';
 import WarningBox from '../components/WarningBox';
 import styles from './Index.module.scss';
+import { StoredFeeling, recordFeeling } from '../storage/localDb';
 import { UserSettingsContext } from '../contexts/UserSettingsContext';
 import { useNavigate } from 'react-router';
-import CheckIn from '../components/CheckIn';
-import { recordFeeling } from '../storage/localDb';
 
 const PWA_WARNING_KEY = "pwa-warning";
 
@@ -21,7 +22,8 @@ const IS_PWA =
 export default function Index(): JSX.Element {
   const navigate = useNavigate();
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
-  const [feeling, setFeeling] = useState<string[]>([]);
+  const [feeling, setFeeling] = useState<StoredFeeling | null>(null);
+  const [showTag, setShowTag] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(new Date())
   const [showSaved, setShowSaved] = useState(false);
   const savedRef = createRef<HTMLDivElement>();
@@ -41,8 +43,9 @@ export default function Index(): JSX.Element {
 
   const closePwaWarning = useCallback(async () => {
     if (userSettings != null &&
-      userSettings.dismissedInfo.indexOf(PWA_WARNING_KEY) < 0) {
-      userSettings.dismissedInfo.push(PWA_WARNING_KEY);
+      (userSettings.dismissedInfo?.indexOf(PWA_WARNING_KEY) || -1) < 0) {
+      userSettings.dismissedInfo = userSettings.dismissedInfo || [];
+      userSettings.dismissedInfo?.push(PWA_WARNING_KEY);
       await setUserSettings(userSettings);
     }
   }, [userSettings]);
@@ -68,7 +71,7 @@ export default function Index(): JSX.Element {
             <Button onClick={() => navigate("/settings")} icon={<IconBxCog />} />
           </div>
           {
-            !IS_PWA && userSettings?.dismissedInfo.indexOf(PWA_WARNING_KEY) === -1 &&
+            !IS_PWA && userSettings?.dismissedInfo?.indexOf(PWA_WARNING_KEY) === -1 &&
             <WarningBox onCloseClicked={closePwaWarning}>
               <p>
                 This app is designed to be installed by Google Chrome as a Progressive
@@ -90,19 +93,27 @@ export default function Index(): JSX.Element {
       footer={
         <>
           {
-            feeling.length > 0 &&
+            feeling != null &&
             <div className={styles.footer}>
-              <Button
-                className={styles.saveButton}
-                onClick={async () => {
-                  await recordFeeling(new Date(), feeling);
-                  setFeeling([]);
-                  setLastUpdate(new Date());
-                  setShowSaved(true);
-                }}
-                disabled={feeling.length < 1}>
-                Save
-              </Button>
+              {
+                showTag ?
+                  <Button
+                    className={styles.saveButton}
+                    onClick={async () => {
+                      await recordFeeling(new Date(), feeling);
+                      setFeeling(null);
+                      setShowTag(false);
+                      setLastUpdate(new Date());
+                      setShowSaved(true);
+                    }}>
+                    Save
+                  </Button> :
+                  <Button
+                    className={styles.saveButton}
+                    onClick={() => setShowTag(true)}>
+                    Next
+                  </Button>
+              }
             </div>
           }
         </>
@@ -110,7 +121,13 @@ export default function Index(): JSX.Element {
 
       <LastWeek lastUpdate={lastUpdate} />
 
-      <CheckIn feeling={feeling} setFeeling={setFeeling} />
+      {
+        (feeling != null && showTag) ?
+          <TagFeeling feeling={feeling} setFeeling={setFeeling} /> :
+          <CheckIn
+            feeling={feeling}
+            setFeeling={(f) => setFeeling({ ts: new Date(), ...f })} />
+      }
     </Page>
   );
 }

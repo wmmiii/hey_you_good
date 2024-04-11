@@ -16,6 +16,7 @@ body {
   --col-warning: #c6a481;
   --font-size-large: 24px;
   --font-size-med: 18px;
+  --font-size-small: 14px;
   --input-bg: #ffffff;
   --input-border-focus: 2px solid #a7a7a7;
   --input-border: 2px solid transparent;
@@ -23,6 +24,16 @@ body {
   --padding-med: 16px;
   --padding-small: 12px;
   --text-color: #000000;
+  --tag-text-color: #ffffff;
+  --tag-color-gray: #c2c2c2;
+  --tag-color-red: #e5534b;
+  --tag-color-pink: #c96198;
+  --tag-color-orange: #cc6b2c;
+  --tag-color-yellow: #ae7c13;
+  --tag-color-green: #46954a;
+  --tag-color-teal: #42cce4;
+  --tag-color-blue: #4284e4;
+  --tag-color-violet: #986ee2;
 
   background-color: var(--bg);
   color: var(--text-color);
@@ -38,6 +49,7 @@ body.dark {
   --input-bg: #222222;
   --input-border-focus: 2px solid #3e3e3e;
   --text-color: #ffffff;
+  --tag-color-gray: #585858;
 }
 
 a {
@@ -49,6 +61,7 @@ a {
     --border-radius: 2px;
     --font-size-large: 20px;
     --font-size-med: 16px;
+    --font-size-small: 12px;
     --input-border-focus: 1px solid #a7a7a7;
     --input-border: 1px solid transparent;
     --padding-large: 14px;

@@ -11,13 +11,7 @@ initStorage();
 getSWRegistration()
   .then(() => {
     const defaultSettings: UserSettings = {
-      dailyPrompts: [
-        { type: 'text', prompt: 'What is one thing you wish you did better today?' },
-        { type: 'text', prompt: 'What is one thing you are proud of today?' },
-        { type: 'text', prompt: 'What are you looking forward to tomorrow?' },
-      ],
       dismissedInfo: [],
-      recordData: true,
     };
 
     setUserSettings(Object.assign({}, defaultSettings, getUserSettings()));

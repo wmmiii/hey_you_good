@@ -1,17 +1,16 @@
-.container>ol {
+.container,
+.day {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.feeling {
-  border-radius: 22px;
-  color: #ffffff;
-  font-weight: bold;
-  padding: var(--padding-small);
-  width: fit-content;
+.day>li {
+  margin: var(--padding-med);
 }
 
 .footer {
   display: flex;
   flex-direction: column;
-  padding: var(--padding-large);
+  padding: var(--padding-large) 0;
 }
