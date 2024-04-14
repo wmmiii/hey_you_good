@@ -1,12 +1,13 @@
-import IconBxCheck from '../icons/IconBxCheck';
+import Feeling from './Feeling';
 import React, { useCallback, useMemo, useState } from 'react';
 import TextInput from './TextInput';
 import styles from './Checkin.module.scss';
+import { MinimalFeeling } from '../storage/localDb';
 import { gloriaList } from '../feelingsModel';
 
 interface CheckInProps {
-  feeling: string[];
-  setFeeling: (feeling: string[]) => void;
+  feeling: MinimalFeeling | null;
+  setFeeling: (feeling: MinimalFeeling) => void;
 }
 
 export default function CheckIn({
@@ -17,16 +18,22 @@ export default function CheckIn({
 
   const filteredFeelings = useMemo(
     () => gloriaList.filter(
-      f => isFeelingVisible(f.path, feeling, searchString)),
+      f => isFeelingVisible(f.path, feeling?.path || [], searchString)),
     [feeling, searchString]);
 
   const onFeelingSelected = useCallback((feelingPath: string[]) => {
     if (isFeelingSelected(feelingPath, feeling)) {
       const newPath = [...feelingPath];
       newPath.pop();
-      setFeeling(newPath);
+      setFeeling({
+        model: 'gloria',
+        path: newPath,
+      });
     } else {
-      setFeeling([...feelingPath]);
+      setFeeling({
+        model: 'gloria',
+        path: feelingPath,
+      });
     }
     setSearchString('');
   }, [feeling, setFeeling, setSearchString]);
@@ -40,26 +47,15 @@ export default function CheckIn({
         placeholder="Search for a feeling..." />
 
       {
-        filteredFeelings.map(f => {
-          const classes = [styles.feeling];
-          if (isFeelingSelected(f.path, feeling)) {
-            classes.push(styles.selected);
-          }
-
-          return (
-            <div
-              key={f.name}
-              className={classes.join(' ')}
-              style={{ backgroundColor: f.color }}
-              onClick={() => onFeelingSelected(f.path)}
-              onKeyDown={() => onFeelingSelected(f.path)}>
-              <div className={styles.iconContainer}>
-                {isFeelingSelected(f.path, feeling) && <IconBxCheck />}
-              </div>
-              {f.name}
-            </div>
-          );
-        })
+        filteredFeelings.map((f, i) => (
+          <Feeling
+            key={i}
+            className={styles.feeling}
+            selected={isFeelingSelected(f.path, feeling)}
+            onSelect={() => onFeelingSelected(f.path)}>
+            {f}
+          </Feeling>
+        ))
       }
     </div>
   );
@@ -88,7 +84,7 @@ function isFeelingVisible(
 
 function isFeelingSelected(
   feelingPath: string[],
-  existingPath: string[]
+  selected: MinimalFeeling | null,
 ): boolean {
-  return feelingPath.every((f, i) => f === existingPath[i]);
+  return feelingPath.every((f, i) => f === (selected?.path || [])[i]);
 }

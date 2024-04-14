@@ -1,3 +1,5 @@
+import { MinimalFeeling } from "./storage/localDb";
+
 type FeelingSlice = string[] | { [feeling: string]: FeelingSlice };
 
 interface FeelingCategory {
@@ -5,12 +7,14 @@ interface FeelingCategory {
   subFeelings: { [feeling: string]: FeelingSlice };
 }
 
+type FeelingModel = { [feeling: string]: FeelingCategory };
+
 /**
  * A mapping of feelings based on The Feelings Wheel by Dr. Gloria Willcox
  *
  * https://blog.calm.com/blog/the-feelings-wheel
  */
-export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
+export const gloriaWheel: FeelingModel = {
   'Happy': {
     color: '#ee856b',
     subFeelings: {
@@ -89,73 +93,38 @@ export const gloriaWheel: { [feeling: string]: FeelingCategory } = {
   },
 };
 
-interface FeelingsIndex {
-  [feeling: string]: {color: string, path: string[] },
-}
+type FeelingsList = Array<MinimalFeeling>;
 
-function createIndex(model: { [feeling: string]: FeelingCategory }): FeelingsIndex {
-  const index: FeelingsIndex = {};
-
-  let id = {
-    id: 0
-  };
-
-  for (let feelingName in gloriaWheel) {
-    const feeling = model[feelingName];
-    const path = [feelingName];
-    index[feelingName] = {
-      color: feeling.color,
-      path: path,
-    };
-
-    for (let subFeeling in feeling.subFeelings) {
-      addSlice(index, path, feeling.color, subFeeling, feeling.subFeelings[subFeeling])
-    }
-  }
-
-  return index;
-}
-
-function addSlice(index: FeelingsIndex, parentPath: string[], color: string, feelingName: string, slice: FeelingSlice): void {
-  const path = [...parentPath, feelingName];
-  index[feelingName] = {
-    color: color,
-    path: path,
-  };
-  if (Array.isArray(slice)) {
-    for (const subFeeling of slice) {
-      index[subFeeling] = {
-        color: color,
-        path: [...path, subFeeling],
-      };
-    }
-  } else {
-    for (const subFeeling in slice) {
-      addSlice(index, path, color, subFeeling, slice[subFeeling]);
-    }
-  }
-}
-
-type FeelingsList = Array<{
-  name: string,
-  path: string[],
-  color: string,
-}>;
-
-
-function createList(index: FeelingsIndex): FeelingsList {
+function createList(model: FeelingModel): FeelingsList {
   const list: FeelingsList = [];
-  
-  for (const name of Object.keys(index)) {
-    const feeling = index[name];
+
+  const recurse = (prefix: string[], remainder: FeelingSlice) => {
     list.push({
-      name,
-      ...feeling
+      model: 'gloria',
+      path: prefix,
     });
+
+    if (Array.isArray(remainder)) {
+      list.push(...remainder.map(f => ({
+        model: 'gloria' as 'gloria',
+        path: [...prefix, f],
+      })));
+    } else {
+      for (const f in remainder) {
+        recurse([...prefix, f], remainder[f]);
+      }
+    }
+  }
+
+  for (const name in model) {
+    recurse([name], model[name].subFeelings);
   }
 
   return list;
 }
 
-export const gloriaIndex = createIndex(gloriaWheel);
-export const gloriaList = createList(gloriaIndex);
+export function getFeelingColor(feeling: MinimalFeeling) {
+  return gloriaWheel[feeling.path[0]].color;
+}
+
+export const gloriaList = createList(gloriaWheel);

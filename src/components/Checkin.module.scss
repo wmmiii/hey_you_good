@@ -5,32 +5,13 @@
   justify-content: flex-start;
 }
 
-.feeling,
-.feeling:focus {
-  border-radius: var(--border-radius);
-  color: #ffffff;
-  cursor: pointer;
-  font-size: var(--font-size-med);
-  font-weight: bold;
+.feeling {
   margin: var(--padding-small) 0;
-  padding: var(--padding-med);
   user-select: none;
-}
-
-.selected,
-.feeling:hover {
-  filter: brightness(1.2);
 }
 
 .searchInput {
   display: block;
   margin: var(--padding-small) 0;
   width: 100%;
-}
-
-.iconContainer {
-  display: inline-block;
-  height: 1em;
-  margin-right: 8px;
-  width: 1em;
 }

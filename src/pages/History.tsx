@@ -2,13 +2,13 @@ import Button from '../components/Button';
 import Page from '../components/Page';
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './History.module.scss';
-import { Feeling, getFeelings } from '../storage/localDb';
-import { gloriaIndex } from "../feelingsModel";
+import { StoredFeeling, getFeelings } from '../storage/localDb';
 import { useNavigate } from 'react-router';
+import Feeling from '../components/Feeling';
 
 export default function History(): JSX.Element {
   const navigate = useNavigate();
-  const [feelings, setFeelings] = useState<Feeling[] | null>(null);
+  const [feelings, setFeelings] = useState<StoredFeeling[] | null>(null);
 
   useEffect(() => {
     const now = new Date();
@@ -16,7 +16,7 @@ export default function History(): JSX.Element {
     yearAgo.setFullYear(yearAgo.getFullYear() - 1);
 
     getFeelings(yearAgo, now).then(setFeelings);
-  });
+  }, []);
 
   const days = useMemo((): Day[] => {
     if (feelings == null) {
@@ -60,22 +60,19 @@ export default function History(): JSX.Element {
       {
         days == null ?
           <span>Loading...</span> :
-          <ol>
+          <ol className={styles.container}>
             {
               days.map(d => (
                 <li key={d.date.toDateString()}>
                   <h3>{d.date.toLocaleDateString()}</h3>
-                  <ul>
+                  <ul className={styles.day}>
                     {
-                      d.entries.map((e, i) => (
-                        <div
-                          key={i}
-                          className={styles.feeling}
-                          style={{
-                            backgroundColor: gloriaIndex[e['path'][0]].color
-                          }}>
-                          {e["path"][e["path"].length - 1]}
-                        </div>
+                      d.entries.map((f, i) => (
+                        <li key={i}>
+                        <Feeling>
+                          {f}
+                        </Feeling>
+                        </li>
                       ))
                     }
                   </ul>
@@ -90,5 +87,5 @@ export default function History(): JSX.Element {
 
 interface Day {
   date: Date;
-  entries: Feeling[];
+  entries: StoredFeeling[];
 }

@@ -1,0 +1,9 @@
+.container>ol {
+  list-style: none;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-large);
+}

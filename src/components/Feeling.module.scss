@@ -1,0 +1,45 @@
+.feeling,
+.feeling:focus {
+  align-items: center;
+  border-radius: var(--border-radius);
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  font-size: var(--font-size-med);
+  font-weight: bold;
+  gap: var(--padding-med);
+  padding: 0 var(--padding-med);
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selected,
+.selectable:hover {
+  filter: brightness(1.2);
+}
+
+.iconContainer {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 1em;
+  padding: var(--padding-med) 0;
+  width: 1em;
+}
+
+.name {
+  flex-shrink: 0;
+  padding: var(--padding-med) 0;
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: var(--padding-small);
+  justify-content: end;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
